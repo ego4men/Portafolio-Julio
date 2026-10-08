@@ -29,7 +29,7 @@
 
 | # | Proyecto | Repo | Estado |
 |---|---|---|---|
-| 1 | Análisis de cartera y morosidad | — | ⬜ |
+| 1 | Análisis de cartera y morosidad | Local: `D:\Proyectosnalisis-cartera-morosidad` (aún sin publicar) | 🟡 Datos + SQL listos |
 | 2 | Detección de fraude en seguros | — | ⬜ |
 | 3 | App de Power Platform | — | ⬜ |
 | 4 | Caso de transformación digital | — | ⬜ |
@@ -41,6 +41,8 @@
 | Habilidad | Dónde se practicó |
 |---|---|
 | Git: configuración de identidad | Semana 0 |
+| Modelo relacional (PK, FK, 1:N), datos sintéticos con pandas | P1 |
+| SQL: CTE, FILTER, CASE, LAG, RANK, NTILE, ROW_NUMBER, generate_series, vistas materializadas | P1 (pendiente: práctica de Julio) |
 
 ## Pendientes inmediatos
 
