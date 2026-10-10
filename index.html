@@ -2,221 +2,397 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Julio García Jara · Portafolio</title>
-  <meta name="description" content="Portafolio de análisis de datos, BI y transformación digital de Julio García Jara: SQL, Power BI, Python y machine learning aplicados a créditos, cobranzas y seguros.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Julio García Jara · Datos y riesgo</title>
+  <meta name="description" content="Portafolio de Julio García Jara: análisis de datos, BI, machine learning e IA generativa aplicados a créditos, cobranzas, seguros y fraude.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* Layout: hero asimétrico (tesis + "ficha de cartera"), proyectos como expedientes a dos columnas,
+       una franja de IA aplicada y habilidades en rejilla. La escala de tramos de mora es el motivo visual. */
     :root {
-      --bg: #fcfcfb;
+      --bg: #f3f6f4;          /* papel con un leve tinte verde */
       --surface: #ffffff;
-      --surface-2: #f3f2ef;
-      --border: #e4e3df;
-      --text: #0b0b0b;
-      --text-2: #52514e;
-      --accent: #2a78d6;
-      --accent-soft: #e8f1fc;
-      --ok: #1b7f4e;
-      --wip: #8a5a00;
-      --radius: 14px;
+      --surface-2: #e8eeeb;
+      --line: #d3ddd8;
+      --ink: #0f1f1b;
+      --ink-2: #4a5a55;
+      --accent: #0b6e5a;      /* verde banca */
+      --accent-ink: #ffffff;
+      --accent-soft: #d6ebe4;
+      /* escala de tramos de mora: de sano a crítico */
+      --t0: #0b6e5a; --t1: #6fae8f; --t2: #e0a63a; --t3: #d9702f; --t4: #b8382c;
+      --plate: #ffffff;       /* fondo de los gráficos (PNG claros) */
+      --shadow: 0 1px 2px rgb(15 31 27 / .06), 0 12px 32px -12px rgb(15 31 27 / .18);
+      --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+      --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+      --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+      --r: 16px;
+      color-scheme: light;
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --bg: #121211; --surface: #1a1a19; --surface-2: #232321; --border: #33332f;
-        --text: #f5f5f3; --text-2: #c3c2b7; --accent: #5a9cec; --accent-soft: #1d2a3b;
-        --ok: #4fc58a; --wip: #e0b25a;
+        --bg: #0c1513; --surface: #13201c; --surface-2: #1a2a25; --line: #26392f;
+        --ink: #e9f1ee; --ink-2: #a9bab3; --accent: #3cc49d; --accent-ink: #062019; --accent-soft: #163a30;
+        --t0: #3cc49d; --t1: #8fcfae; --t2: #f0bd55; --t3: #ec8a4a; --t4: #e2574a;
+        --plate: #f4f7f5; --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 16px 40px -16px rgb(0 0 0 / .6);
+        color-scheme: dark;
       }
     }
     :root[data-theme="dark"] {
-      --bg: #121211; --surface: #1a1a19; --surface-2: #232321; --border: #33332f;
-      --text: #f5f5f3; --text-2: #c3c2b7; --accent: #5a9cec; --accent-soft: #1d2a3b;
-      --ok: #4fc58a; --wip: #e0b25a;
+      --bg: #0c1513; --surface: #13201c; --surface-2: #1a2a25; --line: #26392f;
+      --ink: #e9f1ee; --ink-2: #a9bab3; --accent: #3cc49d; --accent-ink: #062019; --accent-soft: #163a30;
+      --t0: #3cc49d; --t1: #8fcfae; --t2: #f0bd55; --t3: #ec8a4a; --t4: #e2574a;
+      --plate: #f4f7f5; --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 16px 40px -16px rgb(0 0 0 / .6);
+      color-scheme: dark;
     }
+
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0; background: var(--bg); color: var(--text);
-      font-family: "Inter", "Segoe UI", system-ui, sans-serif; line-height: 1.6;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.65 var(--f-body);
+           -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-underline-offset: 3px; }
+    a:focus-visible, .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+    h1, h2, h3, h4 { font-family: var(--f-display); text-wrap: balance; margin: 0; letter-spacing: -0.02em; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
+    .mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+    .eyebrow { font: 500 .75rem/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
 
-    nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent);
-          backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
-    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 12px; }
-    nav .marca { font-weight: 700; color: var(--text); }
-    nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; font-size: .95rem; }
-    nav ul a { color: var(--text-2); }
+    /* ---------- navegación ---------- */
+    nav.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+              background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(10px);
+              border-bottom: 1px solid var(--line); }
+    nav.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+    .marca { display: flex; align-items: center; gap: 10px; font: 700 1.05rem var(--f-display); color: var(--ink); text-decoration: none; }
+    .marca i { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font: 800 .8rem var(--f-display);
+               font-style: normal; background: var(--ink); color: var(--bg); }
+    nav.top ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+    nav.top ul a { color: var(--ink-2); text-decoration: none; font-weight: 500; font-size: .95rem; }
+    nav.top ul a:hover { color: var(--ink); }
 
-    header.hero { padding: 72px 0 48px; }
-    .etiqueta { display: inline-block; font-size: .8rem; font-weight: 600; color: var(--accent);
-                background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
-    h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 16px 0 12px; letter-spacing: -0.02em; }
-    .hero p.lead { font-size: 1.15rem; color: var(--text-2); max-width: 720px; margin: 0 0 24px; }
+    /* ---------- hero ---------- */
+    .hero { padding-block: 72px 64px; }
+    .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+    .hero .wrap > * { min-width: 0; }
+    .disponible { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px;
+                  background: var(--accent-soft); color: var(--ink); font-size: .85rem; font-weight: 500; }
+    .disponible::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+                          box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent); }
+    .hero h1 { font-size: clamp(2.4rem, 5.6vw, 4.1rem); line-height: 1.02; font-weight: 800; margin: 22px 0 20px; }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero .lead { font-size: 1.15rem; color: var(--ink-2); max-width: 34em; margin: 0 0 30px; }
     .botones { display: flex; flex-wrap: wrap; gap: 12px; }
-    .btn { display: inline-block; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: .95rem; }
-    .btn.primario { background: var(--accent); color: #fff; }
-    .btn.secundario { border: 1px solid var(--border); color: var(--text); background: var(--surface); }
-    .btn:hover { text-decoration: none; opacity: .9; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px;
+           font-weight: 600; font-size: .98rem; text-decoration: none; transition: transform .15s ease, background .15s ease; }
+    .btn.primario { background: var(--ink); color: var(--bg); }
+    .btn.secundario { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+    .btn:hover { transform: translateY(-2px); }
 
-    section { padding: 48px 0; border-top: 1px solid var(--border); }
-    h2 { font-size: 1.6rem; margin: 0 0 8px; letter-spacing: -0.01em; }
-    .sub { color: var(--text-2); margin: 0 0 28px; }
+    /* ficha de cartera */
+    .ficha { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 24px;
+             box-shadow: var(--shadow); }
+    .ficha header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+    .ficha h2 { font-size: 1.1rem; font-weight: 700; }
+    .barra { display: flex; height: 18px; border-radius: 6px; overflow: hidden; gap: 2px; background: var(--surface); }
+    .barra span { display: block; height: 100%; transform-origin: left; animation: crecer .9s cubic-bezier(.2,.7,.2,1) both; }
+    .barra span:nth-child(2) { animation-delay: .08s; } .barra span:nth-child(3) { animation-delay: .16s; }
+    .barra span:nth-child(4) { animation-delay: .24s; } .barra span:nth-child(5) { animation-delay: .32s; }
+    @keyframes crecer { from { transform: scaleX(.15); opacity: .4; } to { transform: scaleX(1); opacity: 1; } }
+    .tramos { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+    .tramos li { display: grid; grid-template-columns: 12px 1fr auto; align-items: center; gap: 10px; font-size: .92rem; }
+    .tramos li i { width: 12px; height: 12px; border-radius: 3px; }
+    .tramos b { font: 500 .92rem var(--f-mono); font-variant-numeric: tabular-nums; }
+    .ficha .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--line); }
+    .ficha .kpis div { min-width: 0; }
+    .ficha .kpis b { display: block; font: 700 1.7rem/1.1 var(--f-display); font-variant-numeric: tabular-nums; }
+    .ficha .kpis span { font-size: .82rem; color: var(--ink-2); line-height: 1.35; display: block; }
+    .ficha footer { margin-top: 16px; font-size: .8rem; color: var(--ink-2); }
 
-    .proyecto { display: grid; grid-template-columns: 1.05fr 1fr; gap: 28px; align-items: start;
-                background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-                padding: 24px; margin-bottom: 24px; }
-    .proyecto img { width: 100%; border-radius: 10px; border: 1px solid var(--border); background: #fff; }
-    .proyecto h3 { margin: 6px 0 8px; font-size: 1.3rem; }
-    .proyecto p { margin: 0 0 12px; color: var(--text-2); }
-    .metricas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
-    .metrica { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; }
-    .metrica b { display: block; font-size: 1.25rem; color: var(--text); }
-    .metrica span { font-size: .8rem; color: var(--text-2); line-height: 1.3; display: block; }
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 16px; padding: 0; list-style: none; }
-    .chips li { font-size: .78rem; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--text-2); }
-    .estado { font-size: .78rem; font-weight: 600; }
-    .estado.ok { color: var(--ok); }
-    .estado.wip { color: var(--wip); }
-    .enlaces { display: flex; gap: 16px; flex-wrap: wrap; font-weight: 600; font-size: .95rem; }
+    /* ---------- secciones ---------- */
+    section { padding-block: 72px; }
+    .cabecera { display: grid; gap: 10px; margin-bottom: 36px; max-width: 46em; }
+    .cabecera h2 { font-size: clamp(1.9rem, 3.6vw, 2.6rem); font-weight: 800; line-height: 1.1; }
+    .cabecera p { margin: 0; color: var(--ink-2); }
 
-    .proximos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-    .tarjeta { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
-    .tarjeta h4 { margin: 4px 0 6px; font-size: 1.02rem; }
-    .tarjeta p { margin: 0; color: var(--text-2); font-size: .92rem; }
+    /* expedientes de proyecto */
+    .proyectos { display: grid; gap: 28px; }
+    .proyecto { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface); border: 1px solid var(--line);
+                border-radius: 22px; overflow: hidden; }
+    .proyecto > * { min-width: 0; }
+    .proyecto .texto { padding: 34px; display: flex; flex-direction: column; gap: 16px; }
+    .proyecto .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+    .codigo { font: 500 .78rem var(--f-mono); padding: 4px 9px; border-radius: 6px; background: var(--ink); color: var(--bg); }
+    .sector { font-size: .88rem; color: var(--ink-2); font-weight: 500; }
+    .proyecto h3 { font-size: clamp(1.5rem, 2.6vw, 1.95rem); font-weight: 700; line-height: 1.15; }
+    .proyecto p { margin: 0; color: var(--ink-2); }
+    .cifras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 12px; }
+    .cifras div { padding: 14px; min-width: 0; }
+    .cifras div + div { border-left: 1px solid var(--line); }
+    .cifras b { display: block; font: 700 1.45rem/1.1 var(--f-display); font-variant-numeric: tabular-nums; color: var(--ink); }
+    .cifras span { display: block; font-size: .8rem; line-height: 1.35; color: var(--ink-2); margin-top: 4px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+    .chips li { font: 500 .76rem var(--f-mono); padding: 4px 9px; border-radius: 6px; background: var(--surface-2); color: var(--ink-2); }
+    .ir { margin-top: auto; font-weight: 600; text-decoration: none; display: inline-flex; gap: 6px; align-items: center; }
+    .ir:hover { text-decoration: underline; }
+    .proyecto figure { margin: 0; background: var(--surface-2); padding: 28px; display: grid; place-items: center; }
+    .proyecto figure img { background: var(--plate); border-radius: 12px; padding: 10px; box-shadow: var(--shadow); }
+    .proyecto:nth-child(even) .texto { order: 2; }
 
-    .habilidades { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
-    .habilidades h4 { margin: 0 0 8px; font-size: 1rem; }
-    .habilidades ul { margin: 0; padding-left: 18px; color: var(--text-2); font-size: .95rem; }
+    /* IA aplicada */
+    .ia { background: var(--ink); color: var(--bg); }
+    .ia .cabecera p, .ia .eyebrow { color: color-mix(in srgb, var(--bg) 72%, var(--ink)); }
+    .ia .cabecera h2 em { font-style: normal; color: var(--accent); }
+    .ia-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .ia-grid article { border: 1px solid color-mix(in srgb, var(--bg) 18%, var(--ink)); border-radius: var(--r); padding: 24px; min-width: 0; }
+    .ia-grid h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+    .ia-grid p { margin: 0; font-size: .97rem; color: color-mix(in srgb, var(--bg) 78%, var(--ink)); }
+    .flujo { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font: 500 .85rem var(--f-mono); }
+    .flujo span { padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--bg) 10%, var(--ink)); }
+    .flujo em { font-style: normal; color: var(--accent); }
 
-    footer { border-top: 1px solid var(--border); padding: 28px 0 40px; color: var(--text-2); font-size: .9rem; }
+    /* próximos */
+    .proximos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 44px; }
+    .proximos article { border: 1px dashed var(--line); border-radius: var(--r); padding: 22px; min-width: 0; }
+    .proximos .codigo { background: var(--surface-2); color: var(--ink-2); }
+    .proximos h4 { font-size: 1.1rem; margin: 12px 0 6px; }
+    .proximos p { margin: 0; font-size: .94rem; color: var(--ink-2); }
 
-    @media (max-width: 760px) {
-      nav ul { display: none; }
-      .proyecto { grid-template-columns: 1fr; padding: 18px; }
-      .metricas { grid-template-columns: repeat(2, 1fr); }
-      header.hero { padding: 48px 0 32px; }
+    /* habilidades */
+    .habilidades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .habilidades article { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 22px; min-width: 0; }
+    .habilidades h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; }
+    .habilidades ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: .95rem; color: var(--ink-2); }
+    .habilidades li { display: flex; gap: 8px; }
+    .habilidades li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: .6em; border-radius: 2px; background: var(--accent); }
+    .habilidades small { color: var(--ink-2); font-family: var(--f-mono); font-size: .72rem; }
+
+    /* sobre mí */
+    .sobre .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .sobre .wrap > * { min-width: 0; }
+    .sobre p { margin: 0 0 14px; color: var(--ink-2); }
+    .datos { display: grid; gap: 0; border-top: 1px solid var(--line); }
+    .datos div { display: grid; grid-template-columns: 9em 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .datos dt { font: 500 .78rem var(--f-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-2); padding-top: 3px; }
+    .datos dd { margin: 0; }
+
+    footer.pie { border-top: 1px solid var(--line); padding-block: 30px 44px; color: var(--ink-2); font-size: .9rem; }
+    footer.pie .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+    @media (max-width: 900px) {
+      .hero .wrap, .sobre .wrap { grid-template-columns: 1fr; gap: 40px; }
+      .proyecto { grid-template-columns: 1fr; }
+      .proyecto:nth-child(even) .texto { order: 0; }
+      .ia-grid, .proximos { grid-template-columns: 1fr; }
+      .habilidades { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      nav.top ul { display: none; }
+      .hero { padding-block: 44px 40px; }
+      section { padding-block: 52px; }
+      .proyecto .texto { padding: 24px 20px; }
+      .proyecto figure { padding: 16px; }
+      .cifras { grid-template-columns: 1fr; }
+      .cifras div + div { border-left: 0; border-top: 1px solid var(--line); }
+      .habilidades { grid-template-columns: 1fr; }
+      .datos div { grid-template-columns: 1fr; gap: 2px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .barra span { animation: none; }
+      .btn { transition: none; }
     }
   </style>
 </head>
 <body>
-  <nav>
+  <nav class="top" aria-label="Principal">
     <div class="wrap">
-      <a class="marca" href="#">Julio García Jara</a>
+      <a class="marca" href="#inicio"><i>JG</i> Julio García Jara</a>
       <ul>
         <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#ia">IA aplicada</a></li>
         <li><a href="#habilidades">Habilidades</a></li>
         <li><a href="#sobre-mi">Sobre mí</a></li>
       </ul>
     </div>
   </nav>
 
-  <header class="hero">
+  <header class="hero" id="inicio">
     <div class="wrap">
-      <span class="etiqueta">Disponible para prácticas · Lima, Perú</span>
-      <h1>Análisis de datos y BI para decisiones de riesgo, cobranza y negocio</h1>
-      <p class="lead">Soy estudiante de último ciclo de Ingeniería de Sistemas de Información en la UPC (egreso: diciembre de 2026).
-        Convierto datos en indicadores y modelos que ayudan a decidir: SQL avanzado, Power BI, Python y machine learning
-        aplicados a créditos, cobranzas, seguros y fraude.</p>
-      <div class="botones">
-        <a class="btn primario" href="#proyectos">Ver proyectos</a>
-        <a class="btn secundario" href="https://github.com/ego4men">GitHub</a>
-        <!-- Agregar cuando esté disponible:
-        <a class="btn secundario" href="https://www.linkedin.com/in/USUARIO">LinkedIn</a>
-        <a class="btn secundario" href="assets/CV_Julio_Garcia_Jara.pdf">Descargar CV</a> -->
+      <div>
+        <span class="disponible">Disponible para prácticas · Lima, Perú</span>
+        <h1>Convierto datos de riesgo en <em>decisiones</em> de cobranza y negocio</h1>
+        <p class="lead">Estudiante de último ciclo de Ingeniería de Sistemas de Información en la UPC (egreso en diciembre de 2026).
+          Trabajo con SQL, Power BI, Python, machine learning e IA generativa en problemas de créditos, cobranzas, seguros y fraude.</p>
+        <div class="botones">
+          <a class="btn primario" href="#proyectos">Ver proyectos ↓</a>
+          <a class="btn secundario" href="https://github.com/ego4men">GitHub</a>
+          <!-- Activar cuando estén disponibles:
+          <a class="btn secundario" href="https://www.linkedin.com/in/USUARIO">LinkedIn</a>
+          <a class="btn secundario" href="assets/CV_Julio_Garcia_Jara.pdf">CV en PDF</a> -->
+        </div>
       </div>
+
+      <aside class="ficha" aria-label="Resumen del proyecto de cartera">
+        <header>
+          <h2>Cartera por tramo de mora</h2>
+          <span class="eyebrow">Corte 30/09/2026</span>
+        </header>
+        <div class="barra" role="img" aria-label="Saldo vigente: 88,2 % al día, 6,9 % de 1 a 30 días, 3,3 % de 31 a 60, 0,9 % de 61 a 90 y 0,8 % de más de 90 días">
+          <span style="width:88.17%; background:var(--t0)"></span>
+          <span style="width:6.92%; background:var(--t1)"></span>
+          <span style="width:3.25%; background:var(--t2)"></span>
+          <span style="width:0.90%; background:var(--t3)"></span>
+          <span style="width:0.75%; background:var(--t4)"></span>
+        </div>
+        <ul class="tramos">
+          <li><i style="background:var(--t0)"></i>Al día<b>88,2 %</b></li>
+          <li><i style="background:var(--t1)"></i>1–30 días<b>6,9 %</b></li>
+          <li><i style="background:var(--t2)"></i>31–60 días<b>3,3 %</b></li>
+          <li><i style="background:var(--t3)"></i>61–90 días<b>0,9 %</b></li>
+          <li><i style="background:var(--t4)"></i>Más de 90 días<b>0,8 %</b></li>
+        </ul>
+        <div class="kpis">
+          <div><b>S/ 32,5 M</b><span>saldo de capital vigente</span></div>
+          <div><b>4,91 %</b><span>ratio de mora &gt; 30 días</span></div>
+        </div>
+        <footer>Datos sintéticos del proyecto <a href="#p1">P1 · Cartera y morosidad</a>.</footer>
+      </aside>
     </div>
   </header>
 
   <main>
     <section id="proyectos">
       <div class="wrap">
-        <h2>Proyectos</h2>
-        <p class="sub">Problemas de negocio reales resueltos de principio a fin. Todos usan datos públicos o sintéticos.</p>
+        <div class="cabecera">
+          <span class="eyebrow">Proyectos</span>
+          <h2>Problemas de negocio resueltos de principio a fin</h2>
+          <p>Cada proyecto parte de una pregunta del negocio y termina en una recomendación. Todos usan datos públicos o sintéticos.</p>
+        </div>
 
-        <article class="proyecto">
-          <div>
-            <span class="estado ok">● Completo · Créditos y cobranzas</span>
-            <h3>Análisis de cartera y morosidad</h3>
-            <p>Análisis de una cartera de 5 562 créditos (consumo, microempresa y vehicular) en 10 agencias: ratio de mora,
-              migración entre tramos de atraso (<i>roll rates</i>), cosechas y una lista diaria de cobranza priorizada.</p>
-            <div class="metricas">
-              <div class="metrica"><b>4,91 %</b><span>mora &gt; 30 días al corte</span></div>
-              <div class="metrica"><b>73,5 %</b><span>de 1–30 días se regulariza</span></div>
-              <div class="metrica"><b>47,6 %</b><span>de 61–90 días cae a 90+</span></div>
+        <div class="proyectos">
+          <article class="proyecto" id="p1">
+            <div class="texto">
+              <div class="meta"><span class="codigo">P1</span><span class="sector">Créditos y cobranzas</span></div>
+              <h3>Análisis de cartera y morosidad</h3>
+              <p>Cartera de 5 562 créditos de consumo, microempresa y vehicular en 10 agencias. Calcula el ratio de mora,
+                la migración entre tramos de atraso (<i>roll rates</i>) y las cosechas, y genera una lista diaria de cobranza priorizada.</p>
+              <div class="cifras">
+                <div><b>4,91 %</b><span>mora &gt; 30 días al corte</span></div>
+                <div><b>73,5 %</b><span>de 1–30 días se regulariza al mes</span></div>
+                <div><b>47,6 %</b><span>de 61–90 días cae a 90+</span></div>
+              </div>
+              <ul class="chips">
+                <li>PostgreSQL</li><li>CTE</li><li>Funciones de ventana</li><li>Vistas materializadas</li><li>Python</li><li>Power BI · DAX</li>
+              </ul>
+              <a class="ir" href="https://github.com/ego4men/analisis-cartera-morosidad">Ver repositorio y hallazgos →</a>
             </div>
-            <ul class="chips">
-              <li>PostgreSQL</li><li>CTE</li><li>Funciones de ventana</li><li>Vistas materializadas</li>
-              <li>Python</li><li>Power BI · DAX</li>
-            </ul>
-            <div class="enlaces">
-              <a href="https://github.com/ego4men/analisis-cartera-morosidad">Repositorio y hallazgos →</a>
-            </div>
-          </div>
-          <img src="assets/img/cartera_roll_rates.png" alt="Matriz de roll rates mensuales entre tramos de mora" loading="lazy">
-        </article>
+            <figure><img src="assets/img/cartera_roll_rates.png" alt="Matriz de roll rates: porcentaje de créditos que pasa de cada tramo de mora a otro al mes siguiente" loading="lazy" width="640" height="650"></figure>
+          </article>
 
-        <article class="proyecto">
-          <div>
-            <span class="estado ok">● Completo · Seguros y prevención de fraude</span>
-            <h3>Detección de fraude en seguros vehiculares</h3>
-            <p>Modelo XGBoost calibrado que prioriza qué reclamos investigar. Usa 15 419 reclamos (6 % de fraude),
-              una validación temporal, un umbral elegido por costo y una app en Streamlit con simulador de costos.</p>
-            <div class="metricas">
-              <div class="metrica"><b>47 %</b><span>del fraude detectado revisando el 20 %</span></div>
-              <div class="metrica"><b>3,2×</b><span>PR-AUC frente al azar</span></div>
-              <div class="metrica"><b>−48 %</b><span>costo frente a no usar modelo</span></div>
+          <article class="proyecto" id="p2">
+            <div class="texto">
+              <div class="meta"><span class="codigo">P2</span><span class="sector">Seguros y prevención de fraude</span></div>
+              <h3>Detección de fraude en seguros vehiculares</h3>
+              <p>Modelo XGBoost calibrado que prioriza qué reclamos investigar entre 15 419 casos con 6 % de fraude.
+                Usa validación temporal y un umbral elegido por costo, y se acompaña de una app en Streamlit con simulador de costos.</p>
+              <div class="cifras">
+                <div><b>47 %</b><span>del fraude detectado revisando el 20 %</span></div>
+                <div><b>3,2×</b><span>PR-AUC frente al azar</span></div>
+                <div><b>−48 %</b><span>costo frente a no usar modelo</span></div>
+              </div>
+              <ul class="chips">
+                <li>Python</li><li>pandas</li><li>Chi-cuadrado</li><li>XGBoost</li><li>Calibración</li><li>Streamlit</li>
+              </ul>
+              <a class="ir" href="https://github.com/ego4men/deteccion-fraude-seguros">Ver repositorio y metodología →</a>
             </div>
-            <ul class="chips">
-              <li>Python</li><li>pandas</li><li>Chi-cuadrado</li><li>XGBoost</li><li>Calibración</li><li>Streamlit</li>
-            </ul>
-            <div class="enlaces">
-              <a href="https://github.com/ego4men/deteccion-fraude-seguros">Repositorio y metodología →</a>
-            </div>
-          </div>
-          <img src="assets/img/fraude_captura.png" alt="Curva de captura del modelo de fraude frente a la revisión al azar" loading="lazy">
-        </article>
+            <figure><img src="assets/img/fraude_captura.png" alt="Curva de captura: el modelo detecta más fraude que la revisión al azar con el mismo número de reclamos revisados" loading="lazy" width="870" height="630"></figure>
+          </article>
+        </div>
 
-        <h3 style="margin-top:36px">En desarrollo</h3>
         <div class="proximos">
-          <div class="tarjeta"><span class="estado wip">● Próximamente</span><h4>App de Power Platform</h4>
-            <p>Registro y aprobación de solicitudes con Power Apps, flujo en Power Automate y reporte en Power BI.</p></div>
-          <div class="tarjeta"><span class="estado wip">● Próximamente</span><h4>Caso de transformación digital</h4>
-            <p>Levantamiento de requisitos, historias de usuario, backlog en Scrum y procesos BPMN actual y propuesto.</p></div>
-          <div class="tarjeta"><span class="estado wip">● Próximamente</span><h4>Pipeline ETL automatizado</h4>
-            <p>API pública → Python → BigQuery → reporte en Looker Studio.</p></div>
+          <article><span class="codigo">P3 · en desarrollo</span><h4>App de Power Platform</h4>
+            <p>Registro y aprobación de solicitudes con Power Apps, un flujo de aprobación en Power Automate y un reporte en Power BI.</p></article>
+          <article><span class="codigo">P4 · en desarrollo</span><h4>Caso de transformación digital</h4>
+            <p>Levantamiento de requisitos, historias de usuario, backlog en Scrum y procesos BPMN actual y propuesto.</p></article>
+          <article><span class="codigo">P5 · en desarrollo</span><h4>Pipeline ETL automatizado</h4>
+            <p>Extracción desde una API pública con Python, carga en BigQuery y reporte en Looker Studio.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="ia" id="ia">
+      <div class="wrap">
+        <div class="cabecera">
+          <span class="eyebrow">IA generativa aplicada</span>
+          <h2>Uso la IA para trabajar más rápido, y <em>verifico</em> cada resultado</h2>
+          <p>Integro asistentes de IA en mi flujo de trabajo: diseño los prompts, automatizo las tareas repetitivas y reviso los resultados contra los datos.</p>
+        </div>
+        <div class="ia-grid">
+          <article>
+            <h3>Prompt engineering</h3>
+            <p>Prompts estructurados con contexto, rol, restricciones y formato de salida esperado, para obtener resultados consistentes y reutilizables.</p>
+          </article>
+          <article>
+            <h3>Automatización con agentes</h3>
+            <p>Agentes de IA que generan y prueban código, consultas SQL y documentación, conectados a mis herramientas de trabajo (terminal, Git, base de datos).</p>
+          </article>
+          <article>
+            <h3>Validación humana</h3>
+            <p>Cada cifra se contrasta con una segunda fuente. En el proyecto de cartera, esa revisión detectó y corrigió dos errores de la simulación antes de publicar.</p>
+          </article>
+        </div>
+        <div class="flujo" aria-label="Flujo de trabajo con IA">
+          <span>Pregunta de negocio</span><em>→</em><span>Prompt con contexto</span><em>→</em><span>Código generado</span><em>→</em><span>Pruebas y verificación</span><em>→</em><span>Hallazgo documentado</span>
         </div>
       </div>
     </section>
 
     <section id="habilidades">
       <div class="wrap">
-        <h2>Habilidades</h2>
-        <p class="sub">Herramientas que uso en los proyectos.</p>
+        <div class="cabecera">
+          <span class="eyebrow">Habilidades</span>
+          <h2>Herramientas que uso en los proyectos</h2>
+        </div>
         <div class="habilidades">
-          <div><h4>Datos y BI</h4><ul><li>SQL / PostgreSQL (CTE, funciones de ventana)</li><li>Power BI (DAX, Power Query)</li><li>Excel avanzado (certificado)</li></ul></div>
-          <div><h4>Programación y ML</h4><ul><li>Python: pandas, scikit-learn, XGBoost</li><li>Streamlit</li><li>Java, Angular, APIs REST, Git</li></ul></div>
-          <div><h4>Negocio y gestión</h4><ul><li>Finanzas, contabilidad e ingeniería económica</li><li>Requisitos e historias de usuario</li><li>Scrum (SFC), PMBOK</li></ul></div>
-          <div><h4>Plataformas</h4><ul><li>Salesforce CRM</li><li>Oracle APEX</li><li>Power Apps (en curso)</li></ul></div>
+          <article><h3>Datos y BI</h3><ul>
+            <li>SQL y PostgreSQL: CTE, funciones de ventana</li><li>Power BI: DAX, Power Query</li><li>Excel avanzado <small>· certificado</small></li></ul></article>
+          <article><h3>Programación y ML</h3><ul>
+            <li>Python: pandas, scikit-learn, XGBoost</li><li>Streamlit</li><li>Java, Angular, APIs REST, Git</li></ul></article>
+          <article><h3>IA generativa</h3><ul>
+            <li>Prompt engineering</li><li>Automatización con agentes de IA</li><li>Validación de resultados generados</li></ul></article>
+          <article><h3>Negocio y plataformas</h3><ul>
+            <li>Finanzas e ingeniería económica</li><li>Requisitos, Scrum <small>· SFC</small>, PMBOK</li><li>Salesforce CRM, Oracle APEX, Power Apps</li></ul></article>
         </div>
       </div>
     </section>
 
-    <section id="sobre-mi">
+    <section class="sobre" id="sobre-mi">
       <div class="wrap">
-        <h2>Sobre mí</h2>
-        <p class="sub" style="max-width:760px">Me interesa trabajar donde los datos cambian decisiones: banca, créditos y cobranzas, seguros y prevención de fraude,
-          consumo masivo y farmacéutica. Me formé en Ingeniería de Sistemas de Información en la UPC, con base en finanzas y gestión de proyectos,
-          y tengo inglés de nivel C1. Este portafolio crece cada semana con nuevos proyectos.</p>
+        <div class="cabecera" style="margin:0">
+          <span class="eyebrow">Sobre mí</span>
+          <h2>Ingeniería, finanzas y datos en un mismo perfil</h2>
+          <p>Me interesa trabajar donde los datos cambian decisiones: banca, créditos y cobranzas, seguros y prevención de fraude,
+            consumo masivo y farmacéutica. Combino la base técnica de sistemas con formación en contabilidad, finanzas y gestión de proyectos.
+            Este portafolio crece cada semana con proyectos nuevos.</p>
+        </div>
+        <dl class="datos">
+          <div><dt>Formación</dt><dd>Ingeniería de Sistemas de Información · UPC · 10.º ciclo</dd></div>
+          <div><dt>Egreso</dt><dd>Diciembre de 2026</dd></div>
+          <div><dt>Idiomas</dt><dd>Español nativo · Inglés C1</dd></div>
+          <div><dt>Busco</dt><dd>Prácticas en análisis de datos, BI y transformación digital</dd></div>
+          <div><dt>Contacto</dt><dd><a href="https://github.com/ego4men">github.com/ego4men</a></dd></div>
+        </dl>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="wrap">Julio García Jara · <a href="https://github.com/ego4men">github.com/ego4men</a> · Datos de los proyectos públicos o sintéticos.</div>
+  <footer class="pie">
+    <div class="wrap">
+      <span>© 2026 Julio García Jara</span>
+      <span>Los proyectos usan datos públicos o sintéticos.</span>
+    </div>
   </footer>
 </body>
 </html>
