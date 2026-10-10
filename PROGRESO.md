@@ -6,6 +6,7 @@
 
 ## Estructura elegida
 
+- **Sitio publicado:** https://ego4men.github.io/Portafolio-Julio/ (ES/EN, modo claro/oscuro)
 - **Este repo (`Portafolio-Julio`)**: sitio en GitHub Pages que reúne todos los proyectos (es el enlace para el CV y LinkedIn).
 - **Repo de perfil (`ego4men/ego4men`)**: README de presentación en la portada de GitHub (texto listo en `perfil/README.md`).
 - **Un repo por proyecto**: código, datos, consultas, dashboards y README técnico. Carpetas locales en `D:\Proyectos\`.
@@ -20,16 +21,16 @@
 | 08–10/10 | P1 · Datos sintéticos, PostgreSQL, SQL avanzado, gráficos, guía de Power BI y README | ✅ |
 | 10/10 | P2 · Fraude en seguros: EDA, estadística, XGBoost calibrado, app Streamlit y README | ✅ |
 | 10/10 | Sitio del portafolio y README del perfil | ✅ (local) |
-| ≤ 15/10 | Publicar en GitHub: 2 repos de proyecto, Pages y perfil (requiere confirmación de Julio) | ⬜ |
-| ≤ 15/10 | Julio: construir el `.pbix` con `powerbi/GUIA_POWERBI.md` y desplegar la app en Streamlit Community Cloud | ⬜ |
+| 10/10 | Publicado en GitHub: 2 repos de proyecto, portafolio en Pages y perfil | ✅ |
+| ≤ 15/10 | Julio: validar el dashboard PBIP en Power BI Desktop y desplegar la app en Streamlit Community Cloud | 🟡 |
 | Después del 15/10 | Repasos pendientes (abajo) y luego P3 Power Platform → P4 Transformación digital → P5 ETL → P6 Modelo financiero | ⬜ |
 
 ## Proyectos
 
 | # | Proyecto | Carpeta local | Repo | Estado |
 |---|---|---|---|---|
-| 1 | Análisis de cartera y morosidad | `D:/Proyectos/analisis-cartera-morosidad` | ego4men/analisis-cartera-morosidad (por crear) | ✅ Listo · falta `.pbix` |
-| 2 | Detección de fraude en seguros | `D:/Proyectos/deteccion-fraude-seguros` | ego4men/deteccion-fraude-seguros (por crear) | ✅ Listo · falta desplegar la app |
+| 1 | Análisis de cartera y morosidad | `D:/Proyectos/analisis-cartera-morosidad` | [github.com/ego4men/analisis-cartera-morosidad](https://github.com/ego4men/analisis-cartera-morosidad) | ✅ Publicado · PBIP por validar |
+| 2 | Detección de fraude en seguros | `D:/Proyectos/deteccion-fraude-seguros` | [github.com/ego4men/deteccion-fraude-seguros](https://github.com/ego4men/deteccion-fraude-seguros) | ✅ Publicado · falta desplegar la app |
 | 3 | App de Power Platform | — | — | ⬜ |
 | 4 | Caso de transformación digital | — | — | ⬜ |
 | 5 | Pipeline ETL automatizado | — | — | ⬜ |
@@ -67,7 +68,7 @@ Cada repaso usa el código ya construido como material de estudio.
 
 - [x] Configurar el nombre y el correo en Git (correo noreply de GitHub)
 - [x] Instalar pandas, faker, psycopg2, scikit-learn, xgboost y streamlit
-- [ ] Confirmar la publicación en GitHub (repos, Pages y perfil)
+- [x] Publicar en GitHub (repos, Pages y perfil)
 - [ ] Agregar los enlaces de LinkedIn y del CV en `index.html` (están comentados en el código)
 - [ ] Construir el `.pbix` y agregar sus capturas al README de P1
 - [ ] Desplegar la app de P2 en Streamlit Community Cloud y poner el enlace en su README y en el sitio

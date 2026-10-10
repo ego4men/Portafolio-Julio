@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#0f6b57">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_PE">
+  <meta property="og:locale:alternate" content="en_US">
   <meta property="og:title" content="Julio García Jara · Análisis de datos">
   <meta property="og:description" content="Proyectos de SQL, Power BI, Python y machine learning aplicados a créditos, cobranzas y fraude en seguros.">
   <meta property="og:url" content="https://ego4men.github.io/Portafolio-Julio/">
@@ -20,121 +21,213 @@
    "alumniOf":"Universidad Peruana de Ciencias Aplicadas","address":{"@type":"PostalAddress","addressLocality":"Lima","addressCountry":"PE"},
    "url":"https://ego4men.github.io/Portafolio-Julio/","sameAs":["https://www.linkedin.com/in/julio-garcia-jara-39a68327b/","https://github.com/ego4men"]}
   </script>
+  <script>
+    /* Tema e idioma guardados: se aplican antes de pintar para evitar parpadeos */
+    try {
+      var t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t;
+      var l = localStorage.getItem('idioma'); if (l === 'en') document.documentElement.lang = 'en';
+    } catch (e) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Layout: una columna de lectura (~68ch) con mucho aire; cifras en mono como "datos";
-       proyectos en filas 2/3 texto + 1/3 imagen; monocromo con un único acento. */
+    /* Layout: columna de lectura amplia con mucho aire. La "consola" de la portada (consulta → resultado)
+       es el único elemento llamativo; el resto es tipografía, líneas finas y dos paneles de datos vivos. */
     :root {
       --bg: #f9fafa;
       --surface: #ffffff;
+      --surface-2: #f0f3f2;
       --ink: #121615;
       --ink-2: #5b6461;
       --ink-3: #687270;
       --line: #e3e7e5;
       --accent: #0f6b57;
+      --accent-soft: #dcefe8;
       --plate: #ffffff;
+      --console: #101614;
+      --console-ink: #dfe7e4;
+      --console-dim: #7f8c88;
+      --console-key: #7fd8bc;
+      --console-str: #f2c879;
       --f-sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
       --f-mono: "Fragment Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-      --col: 1040px;
+      --col: 1080px;
       color-scheme: light;
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --bg: #0f1211; --surface: #151a18; --ink: #eceeed; --ink-2: #a3aca9; --ink-3: #8a9491;
-        --line: #252c29; --accent: #5cc7a6; --plate: #f2f4f3; color-scheme: dark;
+        --bg: #0f1211; --surface: #151a18; --surface-2: #1b2220; --ink: #eceeed; --ink-2: #a3aca9; --ink-3: #8a9491;
+        --line: #252c29; --accent: #5cc7a6; --accent-soft: #173a30; --plate: #f2f4f3;
+        --console: #080b0a; --console-ink: #dfe7e4; --console-dim: #77847f; color-scheme: dark;
       }
     }
     :root[data-theme="dark"] {
-      --bg: #0f1211; --surface: #151a18; --ink: #eceeed; --ink-2: #a3aca9; --ink-3: #8a9491;
-      --line: #252c29; --accent: #5cc7a6; --plate: #f2f4f3; color-scheme: dark;
+      --bg: #0f1211; --surface: #151a18; --surface-2: #1b2220; --ink: #eceeed; --ink-2: #a3aca9; --ink-3: #8a9491;
+      --line: #252c29; --accent: #5cc7a6; --accent-soft: #173a30; --plate: #f2f4f3;
+      --console: #080b0a; --console-ink: #dfe7e4; --console-dim: #77847f; color-scheme: dark;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.7 var(--f-sans);
            -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-    img { max-width: 100%; display: block; }
+    img { max-width: 100%; display: block; height: auto; }
     a { color: inherit; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 4px;
         transition: text-decoration-color .15s, color .15s; }
     a:hover { color: var(--accent); text-decoration-color: var(--accent); }
-    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
     h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -0.025em; text-wrap: balance; }
     p { margin: 0; }
+    button { font: inherit; color: inherit; }
     .wrap { max-width: var(--col); margin: 0 auto; padding-inline: 24px; }
-    .mono, .label { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
-    .label { font-size: .78rem; letter-spacing: .02em; color: var(--ink-3); }
+    .label { font-family: var(--f-mono); font-variant-numeric: tabular-nums; font-size: .78rem; letter-spacing: .02em; color: var(--ink-3); }
 
-    /* navegación */
-    nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--bg) 90%, transparent);
-          backdrop-filter: blur(8px); }
-    nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 64px; gap: 16px; }
-    nav .nombre { font-weight: 600; text-decoration: none; white-space: nowrap; }
-    nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: .95rem; }
-    nav ul a { text-decoration: none; color: var(--ink-2); }
+    /* ---------- barra superior ---------- */
+    nav.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+              background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px);
+              border-bottom: 1px solid transparent; transition: border-color .2s; }
+    nav.top.scrolled { border-bottom-color: var(--line); }
+    nav.top .wrap { display: flex; align-items: center; gap: 20px; height: 64px; }
+    .nombre { font-weight: 600; text-decoration: none; white-space: nowrap; margin-right: auto; }
+    nav.top ul { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; font-size: .93rem; }
+    nav.top ul a { text-decoration: none; color: var(--ink-2); }
+    .controles { display: flex; gap: 6px; }
+    .ctrl { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; height: 34px; min-width: 34px;
+            padding: 0 10px; cursor: pointer; font-family: var(--f-mono); font-size: .78rem; color: var(--ink-2); }
+    .ctrl:hover { color: var(--ink); border-color: var(--ink-3); }
+    .idioma b { color: var(--ink); font-weight: 400; }
 
-    /* hero */
-    .hero { padding-block: 96px 80px; }
-    .hero .estado { display: inline-flex; align-items: center; gap: 10px; }
-    .hero .estado::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
-    .hero h1 { font-size: clamp(2.5rem, 6.4vw, 4.6rem); line-height: 1.02; letter-spacing: -0.04em; margin: 28px 0 28px; max-width: 13em; }
+    /* ---------- portada ---------- */
+    .hero { padding-block: 80px 72px; }
+    .hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+    .hero .wrap > * { min-width: 0; }
+    .estado { display: inline-flex; align-items: center; gap: 10px; }
+    .estado::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulso 2.4s infinite; }
+    @keyframes pulso { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
+    .hero h1 { font-size: clamp(2.4rem, 5.4vw, 4.1rem); line-height: 1.03; letter-spacing: -0.04em; margin: 24px 0; }
     .hero h1 span { color: var(--ink-3); }
-    .hero .lead { font-size: 1.2rem; color: var(--ink-2); max-width: 36em; }
-    .acciones { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 36px; font-weight: 500; }
-    .acciones a { text-decoration: underline; text-decoration-color: var(--ink-3); }
+    .lead { font-size: 1.15rem; color: var(--ink-2); max-width: 34em; }
+    .acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 32px; font-weight: 500; }
+    .boton { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 8px; background: var(--ink);
+             color: var(--bg); text-decoration: none; font-weight: 500; transition: transform .15s; }
+    .boton:hover { color: var(--bg); transform: translateY(-1px); }
+    .boton.sec { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+    .boton.sec:hover { color: var(--ink); border-color: var(--ink-3); }
 
-    /* resultados en la primera pantalla */
-    .resultados { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 80px; border-top: 1px solid var(--line); }
-    .resultados div { padding: 24px 24px 0 0; min-width: 0; }
-    .resultados div + div { padding-left: 24px; border-left: 1px solid var(--line); }
-    .resultados b { display: block; font: 400 clamp(2rem, 4vw, 2.75rem)/1 var(--f-mono); letter-spacing: -0.03em; }
-    .resultados p { font-size: .95rem; color: var(--ink-2); margin-top: 12px; max-width: 22em; }
-    .resultados .label { display: block; margin-top: 10px; }
+    /* consola: consulta → resultado */
+    .consola { background: var(--console); color: var(--console-ink); border-radius: 14px; overflow: hidden;
+               box-shadow: 0 30px 60px -30px rgb(0 0 0 / .45); font-family: var(--f-mono); }
+    .consola .barra { display: flex; align-items: center; gap: 4px; padding: 10px 12px; border-bottom: 1px solid rgb(255 255 255 / .07); }
+    .consola .tab { background: none; border: 0; color: var(--console-dim); font-family: var(--f-mono); font-size: .74rem;
+                    padding: 6px 10px; border-radius: 6px; cursor: pointer; }
+    .consola .tab:hover { color: var(--console-ink); }
+    .consola .tab[aria-selected="true"] { color: var(--console-ink); background: rgb(255 255 255 / .08); }
+    .consola .progreso { height: 2px; background: rgb(255 255 255 / .06); }
+    .consola .progreso i { display: block; height: 100%; width: 0; background: var(--console-key); }
+    .consola pre { margin: 0; padding: 20px 20px 8px; font: .82rem/1.65 var(--f-mono); white-space: pre-wrap; min-height: 15em; }
+    .consola .k { color: var(--console-key); } .consola .s { color: var(--console-str); } .consola .c { color: var(--console-dim); }
+    .consola .salida { padding: 14px 20px 22px; border-top: 1px dashed rgb(255 255 255 / .1); display: grid; gap: 4px; }
+    .consola .salida b { font: 400 2.4rem/1.1 var(--f-mono); letter-spacing: -0.03em; color: #ffffff; }
+    .consola .salida span { font-family: var(--f-sans); font-size: .95rem; color: var(--console-ink); }
+    .consola .salida small { color: var(--console-dim); font-size: .72rem; }
+    .cursor { display: inline-block; width: .55em; height: 1.05em; vertical-align: -0.15em; background: var(--console-key); animation: parpadeo 1s steps(1) infinite; }
+    @keyframes parpadeo { 50% { opacity: 0; } }
 
-    /* secciones */
+    /* ---------- secciones ---------- */
     section { padding-block: 96px; border-top: 1px solid var(--line); }
-    .titulo { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; margin-bottom: 56px; }
+    .titulo { display: grid; grid-template-columns: 1fr 2.2fr; gap: 24px; margin-bottom: 48px; }
     .titulo > * { min-width: 0; }
-    .titulo h2 { font-size: clamp(1.8rem, 3.4vw, 2.4rem); line-height: 1.1; }
-    .titulo p { color: var(--ink-2); max-width: 34em; }
+    .titulo h2 { font-size: clamp(1.7rem, 3.2vw, 2.3rem); line-height: 1.12; }
+    .titulo p { color: var(--ink-2); max-width: 38em; }
+    .titulo .bloque { display: grid; gap: 14px; }
+    .revelar { transition: transform .6s cubic-bezier(.2,.7,.2,1), opacity .6s; }
+    .js .revelar.oculto { transform: translateY(18px); opacity: .35; }
 
     /* proyectos */
-    .proyecto { display: grid; grid-template-columns: 2fr 1fr; gap: 56px; padding-block: 48px; border-top: 1px solid var(--line); }
-    .proyecto:first-of-type { border-top: 0; padding-top: 0; }
+    .proyecto { padding-block: 56px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+    .proyecto:first-of-type { border-top: 0; padding-top: 8px; }
     .proyecto > * { min-width: 0; }
-    .proyecto .cab { display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
-    .proyecto h3 { font-size: clamp(1.5rem, 2.8vw, 2rem); line-height: 1.15; margin: 14px 0 16px; }
-    .proyecto .desc { color: var(--ink-2); max-width: 38em; }
-    .datos { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 12px 44px; margin: 28px 0; }
-    .datos b { display: block; font: 400 1.6rem/1.1 var(--f-mono); letter-spacing: -0.02em; }
-    .datos span { display: block; font-size: .85rem; color: var(--ink-2); margin-top: 6px; max-width: 14em; line-height: 1.4; }
-    .stack { font-size: .85rem; color: var(--ink-3); }
-    .proyecto .ver { display: inline-block; margin-top: 20px; font-weight: 500; }
-    .proyecto figure { margin: 0; }
-    .proyecto figure img { background: var(--plate); border: 1px solid var(--line); border-radius: 6px; padding: 8px; }
-    .proyecto figcaption { margin-top: 10px; }
-
-    .siguientes { margin-top: 32px; display: grid; gap: 0; }
-    .siguientes div { display: grid; grid-template-columns: 6em 1fr 2fr; gap: 24px; padding: 18px 0; border-top: 1px solid var(--line); color: var(--ink-2); }
-    .siguientes div > * { min-width: 0; }
-    .siguientes strong { color: var(--ink); font-weight: 500; }
-
-    .subtitulo { font-size: 1.1rem; margin-top: 64px; }
-    .subtitulo + .siguientes { margin-top: 16px; }
-
+    .cab { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; }
+    .proyecto h3 { font-size: clamp(1.5rem, 2.6vw, 1.95rem); line-height: 1.15; margin: 12px 0 14px; }
+    .desc { color: var(--ink-2); }
     .caso { margin: 22px 0 0; display: grid; gap: 10px; }
-    .caso div { display: grid; grid-template-columns: 8.5em 1fr; gap: 16px; padding: 0; border: 0; }
+    .caso div { display: grid; grid-template-columns: 8.5em 1fr; gap: 16px; }
     .caso dt { font-family: var(--f-mono); font-size: .78rem; color: var(--ink-3); padding-top: 4px; }
-    .caso dd { margin: 0; color: var(--ink); font-size: .98rem; }
-    .habilidades small { display: inline-block; margin-left: 4px; font-family: var(--f-mono); font-size: .72rem; color: var(--accent); }
-    .cta { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
-    .cta p { flex-basis: 100%; color: var(--ink); font-size: 1.15rem; font-weight: 500; }
-    .boton { display: inline-block; padding: 12px 20px; border-radius: 8px; background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 500; }
-    .boton:hover { color: var(--bg); opacity: .88; }
+    .caso dd { margin: 0; font-size: .98rem; }
+    .datos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 26px 0 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .datos div { min-width: 0; }
+    .datos b { display: block; font: 400 1.55rem/1.1 var(--f-mono); letter-spacing: -0.02em; }
+    .datos span { display: block; font-size: .84rem; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
+    .stack { font-family: var(--f-mono); font-size: .8rem; color: var(--ink-3); }
+    .enlaces { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 20px; font-weight: 500; }
+    .enlaces a { text-decoration: none; }
+    .enlaces a::after { content: " →"; }
+
+    /* paneles de datos interactivos */
+    .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; align-self: start; }
+    .panel h4 { margin: 0 0 4px; font-size: 1rem; font-weight: 600; }
+    .panel .ayuda { font-size: .85rem; color: var(--ink-3); margin-bottom: 16px; }
+    .matriz { display: grid; grid-template-columns: 4.4em repeat(5, 1fr); gap: 3px; font-family: var(--f-mono); font-size: .74rem; }
+    .matriz .eje { color: var(--ink-3); display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px 0; }
+    .matriz .eje.fila { justify-content: flex-start; }
+    .celda { aspect-ratio: 1.35; border: 0; border-radius: 5px; cursor: pointer; font-family: var(--f-mono); font-size: .78rem;
+             font-variant-numeric: tabular-nums; transition: transform .12s, opacity .12s; outline: 2px solid transparent; position: relative; }
+    .celda:hover, .celda.sel { transform: scale(1.07); outline-color: var(--ink); z-index: 1; }
+    .celda.tenue { opacity: .4; }
+    .lectura { margin-top: 16px; min-height: 3.2em; font-size: .95rem; }
+    .lectura b { font-family: var(--f-mono); font-weight: 400; color: var(--accent); }
+    .spark { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .spark svg { width: 100%; height: auto; display: block; overflow: visible; margin-top: 10px; }
+
+    .control { display: grid; gap: 8px; margin-bottom: 18px; }
+    .control label { font-size: .92rem; }
+    .control output { font-family: var(--f-mono); color: var(--accent); }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+    .kpis div { background: var(--surface); padding: 12px 14px; min-width: 0; }
+    .kpis b { display: block; font: 400 1.45rem/1.1 var(--f-mono); letter-spacing: -0.02em; }
+    .kpis span { font-size: .8rem; color: var(--ink-2); }
+    .curva { margin-top: 16px; }
+    .curva svg { width: 100%; height: auto; display: block; overflow: visible; }
+    .curva text { font-family: var(--f-mono); font-size: 10px; fill: var(--ink-3); }
+
+    figure { margin: 0; }
+    .captura { background: var(--plate); border: 1px solid var(--line); border-radius: 10px; padding: 6px; transition: transform .25s; }
+    a:hover .captura { transform: translateY(-3px); }
+    figcaption { margin-top: 10px; }
+
+    .lista { display: grid; }
+    .lista > div { display: grid; grid-template-columns: 6em 1fr 2fr; gap: 24px; padding: 18px 0; border-top: 1px solid var(--line); color: var(--ink-2); }
+    .lista > div > * { min-width: 0; }
+    .lista strong { color: var(--ink); font-weight: 500; }
+    .subtitulo { font-size: 1.05rem; margin: 56px 0 14px; }
+
+    /* experiencia */
+    .experiencia article { display: grid; grid-template-columns: 1fr 2.2fr; gap: 24px; padding-block: 28px; border-top: 1px solid var(--line); }
+    .experiencia article > * { min-width: 0; }
+    .experiencia h3 { font-size: 1.2rem; }
+    .lugar { color: var(--ink-3); font-size: .92rem; margin-top: 4px; }
+    .experiencia ul { margin: 14px 0 0; padding-left: 18px; color: var(--ink-2); display: grid; gap: 6px; }
+
+    /* IA */
+    .pilares { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .pilares > div { min-width: 0; padding-top: 18px; border-top: 2px solid var(--ink); }
+    .pilares h3 { font-size: 1.12rem; margin: 10px 0 8px; }
+    .pilares p { color: var(--ink-2); font-size: .97rem; }
+    .flujo { margin-top: 48px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-family: var(--f-mono); font-size: .82rem; color: var(--ink-2); }
+    .flujo span { padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+    .flujo i { font-style: normal; color: var(--ink-3); }
+
+    /* habilidades */
+    .habilidades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; }
+    .habilidades > div { min-width: 0; }
+    .habilidades h3 { font-size: 1rem; margin-bottom: 14px; }
+    .habilidades ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: var(--ink-2); font-size: .96rem; }
+    .habilidades small { margin-left: 4px; font-family: var(--f-mono); font-size: .7rem; color: var(--accent); white-space: nowrap; }
 
     /* certificaciones */
-    .certificados { display: grid; grid-template-columns: 1fr 1fr; gap: 48px 56px; }
+    .certificados { display: grid; grid-template-columns: 1fr 1fr; gap: 44px 56px; }
     .certificados .grupo { min-width: 0; }
     .certificados h3 { font-size: 1rem; margin-bottom: 8px; }
     .certificados ul { list-style: none; margin: 0; padding: 0; }
@@ -144,99 +237,98 @@
     .certificados strong { display: block; font-weight: 500; }
     .certificados li div span { display: block; color: var(--ink-3); font-size: .9rem; line-height: 1.45; margin-top: 2px; }
 
-    /* experiencia */
-    .experiencia { display: grid; }
-    .experiencia article { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; padding-block: 28px; border-top: 1px solid var(--line); }
-    .experiencia article > * { min-width: 0; }
-    .experiencia h3 { font-size: 1.2rem; }
-    .experiencia .lugar { color: var(--ink-3); font-size: .92rem; margin-top: 4px; }
-    .experiencia ul { margin: 14px 0 0; padding-left: 18px; color: var(--ink-2); display: grid; gap: 6px; }
-
-    /* IA aplicada */
-    .pilares { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
-    .pilares > div { min-width: 0; }
-    .pilares h3 { font-size: 1.15rem; margin: 12px 0 10px; }
-    .pilares p { color: var(--ink-2); font-size: .98rem; }
-    .flujo { margin-top: 56px; display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; font-family: var(--f-mono); font-size: .85rem; color: var(--ink-2); }
-    .flujo i { font-style: normal; color: var(--ink-3); }
-
-    /* habilidades */
-    .habilidades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
-    .habilidades > div { min-width: 0; }
-    .habilidades h3 { font-size: 1rem; margin-bottom: 14px; }
-    .habilidades ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: var(--ink-2); font-size: .97rem; }
-
-    /* sobre mí */
-    .ficha { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
-    .ficha > * { min-width: 0; }
-    .ficha .texto { display: grid; gap: 18px; color: var(--ink-2); max-width: 36em; }
-    dl.perfil { margin: 32px 0 0; display: grid; }
+    /* contacto */
+    .contacto { display: grid; grid-template-columns: 1fr 2.2fr; gap: 24px; }
+    .contacto > * { min-width: 0; }
+    .contacto .texto { display: grid; gap: 16px; color: var(--ink-2); max-width: 38em; }
+    dl.perfil { margin: 32px 0 0; }
     dl.perfil div { display: grid; grid-template-columns: 8em 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
-    dt { font-family: var(--f-mono); font-size: .8rem; color: var(--ink-3); padding-top: 3px; }
-    dd { margin: 0; color: var(--ink); }
+    dl.perfil dt { font-family: var(--f-mono); font-size: .8rem; color: var(--ink-3); padding-top: 3px; }
+    dl.perfil dd { margin: 0; }
+    .cta { margin-top: 36px; padding: 28px; border-radius: 14px; background: var(--surface-2); display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+    .cta p { flex-basis: 100%; font-size: 1.2rem; font-weight: 500; }
 
     footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var(--ink-3); font-size: .88rem; }
     footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 
-    @media (max-width: 1000px) { nav ul li:not(.m) { display: none; } }
-    @media (max-width: 860px) {
-      .titulo, .ficha, .experiencia article { grid-template-columns: 1fr; gap: 10px; }
-      .proyecto { grid-template-columns: 1fr; gap: 28px; }
-      .pilares { grid-template-columns: 1fr; gap: 32px; }
+    @media (max-width: 1020px) { nav.top ul li:not(.m) { display: none; } }
+    @media (max-width: 900px) {
+      .hero .wrap, .proyecto, .titulo, .contacto, .experiencia article { grid-template-columns: 1fr; }
+      .hero .wrap { gap: 40px; }
+      .proyecto { gap: 32px; }
+      .titulo, .experiencia article, .contacto { gap: 10px; }
+      .pilares { grid-template-columns: 1fr; gap: 28px; }
       .habilidades { grid-template-columns: 1fr 1fr; }
-      .siguientes div { grid-template-columns: 5em 1fr; }
-      .siguientes div span:last-child { grid-column: 2; }
-    }
-    @media (max-width: 720px) {
-      .resultados { grid-template-columns: 1fr; margin-top: 56px; }
-      .resultados div, .resultados div + div { padding: 20px 0; border-left: 0; }
-      .resultados div + div { border-top: 1px solid var(--line); }
-      .resultados p { max-width: none; }
+      .lista > div { grid-template-columns: 5em 1fr; }
+      .lista > div > span:last-child { grid-column: 2; }
     }
     @media (max-width: 600px) {
-      nav ul { gap: 16px; font-size: .9rem; }
-      .hero { padding-block: 56px 56px; }
+      .wrap { padding-inline: 18px; }
+      nav.top ul { display: none; }
+      .hero { padding-block: 40px 56px; }
       section { padding-block: 64px; }
-      .datos { grid-template-columns: 1fr 1fr; gap: 20px 24px; }
-      .habilidades { grid-template-columns: 1fr; gap: 28px; }
-      .certificados { grid-template-columns: 1fr; }
+      .datos { grid-template-columns: 1fr 1fr; }
+      .habilidades, .certificados { grid-template-columns: 1fr; gap: 28px; }
       dl.perfil div, .caso div { grid-template-columns: 1fr; gap: 2px; }
+      .consola pre { font-size: .74rem; padding: 16px 16px 6px; min-height: 17em; }
+      .consola .salida { padding: 12px 16px 18px; }
+      .consola .salida b { font-size: 2rem; }
+      .panel { padding: 16px; }
     }
-    @media (max-width: 440px) { nav ul li.x { display: none; } }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } a { transition: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before { animation: none !important; transition: none !important; }
+      .js .revelar.oculto { transform: none; opacity: 1; }
+    }
   </style>
 </head>
 <body>
-  <nav aria-label="Principal">
+  <nav class="top" aria-label="Principal">
     <div class="wrap">
       <a class="nombre" href="#inicio">Julio García Jara</a>
       <ul>
-        <li class="m"><a href="#proyectos">Proyectos</a></li>
-        <li class="m x"><a href="#experiencia">Experiencia</a></li>
-        <li><a href="#ia">IA aplicada</a></li>
-        <li><a href="#habilidades">Habilidades</a></li>
-        <li><a href="#certificaciones">Certificaciones</a></li>
-        <li class="m"><a href="#contacto">Contacto</a></li>
+        <li class="m"><a href="#proyectos" data-i18n="nav_proyectos">Proyectos</a></li>
+        <li><a href="#experiencia" data-i18n="nav_experiencia">Experiencia</a></li>
+        <li><a href="#ia" data-i18n="nav_ia">IA aplicada</a></li>
+        <li><a href="#habilidades" data-i18n="nav_habilidades">Habilidades</a></li>
+        <li><a href="#certificaciones" data-i18n="nav_certificaciones">Certificaciones</a></li>
+        <li class="m"><a href="#contacto" data-i18n="nav_contacto">Contacto</a></li>
       </ul>
+      <div class="controles">
+        <button class="ctrl idioma" id="btn-idioma" type="button" aria-label="Cambiar idioma / Change language"><b>ES</b> / EN</button>
+        <button class="ctrl" id="btn-tema" type="button" aria-label="Cambiar tema claro u oscuro">◐</button>
+      </div>
     </div>
   </nav>
 
   <header class="hero" id="inicio">
     <div class="wrap">
-      <span class="label estado">Practicante de análisis de datos y BI · Disponibilidad inmediata · Lima, Perú</span>
-      <h1>Análisis de datos para riesgo, cobranzas y fraude. <span>De la consulta SQL a la decisión.</span></h1>
-      <p class="lead">Soy estudiante de último ciclo de Ingeniería de Sistemas de Información en la UPC (egreso en diciembre de 2026),
-        con experiencia atendiendo en inglés a clientes de EE. UU. Trabajo con SQL, Power BI, Python, machine learning e IA generativa.</p>
-      <div class="acciones">
-        <a href="#proyectos">Ver proyectos</a>
-        <a href="https://www.linkedin.com/in/julio-garcia-jara-39a68327b/">LinkedIn</a>
-        <a href="https://github.com/ego4men">GitHub</a>
+      <div>
+        <span class="label estado" data-i18n="hero_estado">Practicante de análisis de datos y BI · Disponibilidad inmediata · Lima, Perú</span>
+        <h1 data-i18n="hero_titulo">Análisis de datos para riesgo, cobranzas y fraude. <span>De la consulta SQL a la decisión.</span></h1>
+        <p class="lead" data-i18n="hero_lead">Soy estudiante de último ciclo de Ingeniería de Sistemas de Información en la UPC (egreso en diciembre de 2026),
+          con experiencia atendiendo en inglés a clientes de EE. UU. Trabajo con SQL, Power BI, Python, machine learning e IA generativa.</p>
+        <div class="acciones">
+          <a class="boton" href="#proyectos" data-i18n="hero_ver">Ver proyectos</a>
+          <a class="boton sec" href="assets/Julio_Garcia_Jara_CV.pdf" download data-i18n="hero_cv">Descargar CV</a>
+          <a href="https://www.linkedin.com/in/julio-garcia-jara-39a68327b/">LinkedIn</a>
+          <a href="https://github.com/ego4men">GitHub</a>
+        </div>
       </div>
 
-      <div class="resultados" aria-label="Resultados destacados">
-        <div><b>47,6 %</b><p>de los créditos con 61–90 días de atraso cae a más de 90 días al mes siguiente.</p><span class="label">P1 · Cartera y morosidad · datos sintéticos</span></div>
-        <div><b>47 %</b><p>del fraude se detecta revisando solo el 20 % de los reclamos más riesgosos.</p><span class="label">P2 · Fraude en seguros · dataset público</span></div>
-        <div><b>−48 %</b><p>de costo de investigación y fraude frente a no usar el modelo.</p><span class="label">P2 · Fraude en seguros · dataset público</span></div>
+      <div class="consola" id="consola" aria-roledescription="carrusel" aria-label="Hallazgos destacados">
+        <div class="barra" role="tablist">
+          <button class="tab" role="tab" aria-selected="true" data-i="0">mora.sql</button>
+          <button class="tab" role="tab" aria-selected="false" data-i="1">fraude.py</button>
+          <button class="tab" role="tab" aria-selected="false" data-i="2">umbral.py</button>
+        </div>
+        <div class="progreso"><i id="consola-progreso"></i></div>
+        <pre id="consola-codigo" aria-hidden="true"></pre>
+        <div class="salida" aria-live="polite">
+          <b id="consola-cifra">47,6 %</b>
+          <span id="consola-texto">de los créditos con 61–90 días de atraso cae a más de 90 días al mes siguiente.</span>
+          <small id="consola-fuente">P1 · Cartera y morosidad · datos sintéticos</small>
+        </div>
       </div>
     </div>
   </header>
@@ -244,101 +336,155 @@
   <main>
     <section id="proyectos">
       <div class="wrap">
-        <div class="titulo">
-          <span class="label">Proyectos</span>
-          <p>Cada proyecto parte de una pregunta de negocio y termina en una recomendación concreta. Todos usan datos públicos o sintéticos.</p>
+        <div class="titulo revelar">
+          <span class="label" data-i18n="proy_label">Proyectos</span>
+          <p data-i18n="proy_intro">Cada proyecto parte de una pregunta de negocio y termina en una recomendación concreta. Los paneles son interactivos y usan los resultados reales de cada análisis.</p>
         </div>
 
-        <article class="proyecto">
+        <!-- P1 -->
+        <article class="proyecto revelar" id="p1">
           <div>
-            <div class="cab"><span class="label">P1</span><span class="label">Créditos y cobranzas</span></div>
-            <h3><a href="https://github.com/ego4men/analisis-cartera-morosidad">Análisis de cartera y morosidad</a></h3>
-            <p class="desc">Cartera de 5 562 créditos de consumo, microempresa y vehicular en 10 agencias, modelada en PostgreSQL.
+            <div class="cab"><span class="label">P1</span><span class="label" data-i18n="p1_sector">Créditos y cobranzas · datos sintéticos</span></div>
+            <h3 data-i18n="p1_titulo">Análisis de cartera y morosidad</h3>
+            <p class="desc" data-i18n="p1_desc">Cartera de 5 562 créditos de consumo, microempresa y vehicular en 10 agencias, modelada en PostgreSQL.
               Mide el ratio de mora, la migración entre tramos de atraso y la calidad por cosecha, y genera una lista diaria de cobranza priorizada.</p>
             <dl class="caso">
-              <div><dt>Pregunta</dt><dd>¿Dónde se concentra el riesgo y qué créditos debe gestionar hoy cobranzas?</dd></div>
-              <div><dt>Recomendación</dt><dd>Concentrar la gestión en 1–60 días, donde todavía se recupera, y revisar la originación en microempresa.</dd></div>
+              <div><dt data-i18n="caso_pregunta">Pregunta</dt><dd data-i18n="p1_pregunta">¿Dónde se concentra el riesgo y qué créditos debe gestionar hoy cobranzas?</dd></div>
+              <div><dt data-i18n="caso_reco">Recomendación</dt><dd data-i18n="p1_reco">Concentrar la gestión en 1–60 días, donde todavía se recupera, y revisar la originación en microempresa.</dd></div>
             </dl>
             <div class="datos">
-              <div><b>4,91 %</b><span>mora mayor a 30 días al corte</span></div>
-              <div><b>73,5 %</b><span>de 1–30 días se regulariza en un mes</span></div>
-              <div><b>9,07 %</b><span>mora en microempresa, más del doble que consumo</span></div>
+              <div><b>4,91 %</b><span data-i18n="p1_d1">mora mayor a 30 días al corte</span></div>
+              <div><b>73,5 %</b><span data-i18n="p1_d2">de 1–30 días se regulariza en un mes</span></div>
+              <div><b>9,07 %</b><span data-i18n="p1_d3">mora en microempresa, más del doble que consumo</span></div>
             </div>
-            <p class="stack mono">PostgreSQL · CTE · funciones de ventana · vistas materializadas · Python · Power BI (dashboard en construcción)</p>
-            <a class="ver" href="https://github.com/ego4men/analisis-cartera-morosidad">Ver repositorio →</a>
+            <p class="stack">PostgreSQL · CTE · window functions · materialized views · Python · Power BI (DAX, Power Query)</p>
+            <div class="enlaces">
+              <a href="https://github.com/ego4men/analisis-cartera-morosidad" data-i18n="ver_repo">Repositorio y hallazgos</a>
+              <a href="https://github.com/ego4men/analisis-cartera-morosidad/tree/main/powerbi" data-i18n="p1_pbi">Dashboard de Power BI</a>
+            </div>
           </div>
-          <figure>
-            <img src="assets/img/cartera_roll_rates.png" alt="Matriz de roll rates: porcentaje de créditos que pasa de cada tramo de mora a otro al mes siguiente" loading="lazy" width="640" height="650">
-            <figcaption class="label">Roll rates mensuales entre tramos de mora</figcaption>
-          </figure>
+          <div class="panel">
+            <h4 data-i18n="rr_titulo">Roll rates mensuales</h4>
+            <p class="ayuda" data-i18n="rr_ayuda">Fila: tramo de mora este mes. Columna: tramo al mes siguiente. Pasa el cursor o toca una celda.</p>
+            <div class="matriz" id="matriz" aria-label="Matriz de roll rates"></div>
+            <p class="lectura" id="lectura" aria-live="polite"></p>
+            <div class="spark">
+              <span class="label" data-i18n="spark_titulo">Ratio de mora &gt; 30 días · jul 2024 – sep 2026</span>
+              <svg id="spark" viewBox="0 0 300 70" role="img" aria-label="Evolución del ratio de mora, de 2,85 % a 4,91 %"></svg>
+            </div>
+          </div>
         </article>
 
-        <article class="proyecto">
+        <!-- P2 -->
+        <article class="proyecto revelar" id="p2">
           <div>
-            <div class="cab"><span class="label">P2</span><span class="label">Seguros y prevención de fraude</span></div>
-            <h3><a href="https://github.com/ego4men/deteccion-fraude-seguros">Detección de fraude en seguros vehiculares</a></h3>
-            <p class="desc">Modelo XGBoost calibrado que prioriza qué reclamos investigar entre 15 419 casos con 6 % de fraude.
-              Usa validación temporal y un umbral elegido por costo, e incluye una app en Streamlit con simulador de costos.</p>
+            <div class="cab"><span class="label">P2</span><span class="label" data-i18n="p2_sector">Seguros y prevención de fraude · dataset público</span></div>
+            <h3 data-i18n="p2_titulo">Detección de fraude en seguros vehiculares</h3>
+            <p class="desc" data-i18n="p2_desc">Modelo XGBoost calibrado que prioriza qué reclamos investigar entre 15 419 casos con 6 % de fraude.
+              Usa validación temporal (entrena con 1994–1995 y evalúa con 1996) y un umbral de alerta elegido por costo.</p>
             <dl class="caso">
-              <div><dt>Pregunta</dt><dd>¿Qué reclamos conviene investigar para detectar más fraude con menos esfuerzo?</dd></div>
-              <div><dt>Recomendación</dt><dd>Investigar por puntaje de riesgo con un umbral definido por costo, y reentrenar el modelo cada año por la deriva de los datos.</dd></div>
+              <div><dt data-i18n="caso_pregunta">Pregunta</dt><dd data-i18n="p2_pregunta">¿Qué reclamos conviene investigar para detectar más fraude con menos esfuerzo?</dd></div>
+              <div><dt data-i18n="caso_reco">Recomendación</dt><dd data-i18n="p2_reco">Investigar por puntaje de riesgo con un umbral definido por costo, y reentrenar el modelo cada año por la deriva de los datos.</dd></div>
             </dl>
             <div class="datos">
-              <div><b>92,5 %</b><span>del fraude detectado con el umbral de costo mínimo</span></div>
-              <div><b>−48 %</b><span>de costo frente a no usar el modelo</span></div>
-              <div><b>3,2×</b><span>PR-AUC frente al azar (ROC-AUC 0,790)</span></div>
+              <div><b>92,5 %</b><span data-i18n="p2_d1">del fraude detectado con el umbral de costo mínimo</span></div>
+              <div><b>47 %</b><span data-i18n="p2_d2">del fraude revisando solo el 20 % de reclamos</span></div>
+              <div><b>3,2×</b><span data-i18n="p2_d3">PR-AUC frente al azar (ROC-AUC 0,790)</span></div>
             </div>
-            <p class="stack mono">Python · pandas · chi-cuadrado · XGBoost · calibración · Streamlit</p>
-            <a class="ver" href="https://github.com/ego4men/deteccion-fraude-seguros">Ver repositorio →</a>
+            <p class="stack">Python · pandas · chi-square · XGBoost · Platt calibration · Streamlit</p>
+            <div class="enlaces">
+              <a href="https://github.com/ego4men/deteccion-fraude-seguros" data-i18n="ver_repo">Repositorio y hallazgos</a>
+              <!-- DEMO: reemplazar el href por la URL de Streamlit Community Cloud y quitar el atributo hidden -->
+              <a id="demo-fraude" href="#" hidden data-i18n="p2_demo">Demo en vivo</a>
+            </div>
           </div>
-          <figure>
-            <img src="assets/img/fraude_captura.png" alt="Curva de captura: el modelo detecta más fraude que la revisión al azar con el mismo número de reclamos revisados" loading="lazy" width="870" height="630">
-            <figcaption class="label">Curva de captura frente a la revisión al azar</figcaption>
-          </figure>
+          <div class="panel">
+            <h4 data-i18n="sim_titulo">Simulador de costos</h4>
+            <p class="ayuda" data-i18n="sim_ayuda">Calculado en vivo con las 4 083 predicciones del modelo sobre reclamos de 1996.</p>
+            <div class="control">
+              <label for="ratio" data-i18n="sim_label">Un fraude no detectado cuesta lo mismo que investigar…</label>
+              <input type="range" id="ratio" min="2" max="60" step="1" value="20">
+              <output for="ratio" id="ratio-salida">20 reclamos</output>
+            </div>
+            <div class="kpis">
+              <div><b id="k-umbral">3,5 %</b><span data-i18n="sim_k1">umbral óptimo de alerta</span></div>
+              <div><b id="k-investigar">40,2 %</b><span data-i18n="sim_k2">de reclamos a investigar</span></div>
+              <div><b id="k-recall">89,7 %</b><span data-i18n="sim_k3">del fraude detectado</span></div>
+              <div><b id="k-ahorro">−49,0 %</b><span data-i18n="sim_k4">costo frente a no usar modelo</span></div>
+            </div>
+            <div class="curva">
+              <svg id="curva" viewBox="0 0 320 130" role="img" aria-label="Costo total según el umbral de alerta"></svg>
+            </div>
+          </div>
         </article>
 
-        <h3 class="subtitulo">En desarrollo</h3>
-        <div class="siguientes" aria-label="Proyectos en desarrollo">
-          <div><span class="label">P3</span><strong>App de Power Platform</strong><span>Solicitudes con Power Apps, aprobación en Power Automate y reporte en Power BI.</span></div>
-          <div><span class="label">P4</span><strong>Transformación digital</strong><span>Requisitos, historias de usuario, Scrum y procesos BPMN actual y propuesto.</span></div>
-          <div><span class="label">P5</span><strong>Pipeline ETL</strong><span>API pública, Python, BigQuery y reporte en Looker Studio.</span></div>
+        <!-- Proyecto académico con evidencia -->
+        <article class="proyecto revelar" id="churn">
+          <div>
+            <div class="cab"><span class="label">UPC · 2025</span><span class="label" data-i18n="p3_sector">Telecomunicaciones · proyecto grupal · dataset IBM Telco</span></div>
+            <h3 data-i18n="p3_titulo">Predicción de cancelación de clientes (churn)</h3>
+            <p class="desc" data-i18n="p3_desc">Proyecto del curso Business Predictive Analytics con un equipo de seis personas. Comparamos regresión logística, árbol de decisión,
+              Random Forest y XGBoost sobre 7 043 clientes, y publicamos un dashboard de KPIs en Power BI y una app en Streamlit Cloud.</p>
+            <dl class="caso">
+              <div><dt data-i18n="p3_rol_t">Mi rol</dt><dd data-i18n="p3_rol">Recolección, limpieza y transformación de los datos en un pipeline reproducible con pandas, y participación en el dashboard de Power BI.</dd></div>
+              <div><dt data-i18n="caso_reco">Recomendación</dt><dd data-i18n="p3_reco">Migrar clientes mes a mes a contratos anuales y acompañar a los nuevos en sus primeros 3 a 6 meses.</dd></div>
+            </dl>
+            <div class="datos">
+              <div><b>0,841</b><span data-i18n="p3_d1">AUC de XGBoost en prueba</span></div>
+              <div><b>+17 %</b><span data-i18n="p3_d2">de AUC frente a la regresión logística base (0,721)</span></div>
+              <div><b>1 869</b><span data-i18n="p3_d3">clientes que cancelaron, analizados por contrato y pago</span></div>
+            </div>
+            <p class="stack">Python · pandas · scikit-learn · XGBoost · Power BI · Streamlit</p>
+          </div>
+          <a href="assets/img/churn_dashboard.jpg" aria-label="Ver el dashboard de churn en tamaño completo">
+            <figure>
+              <img class="captura" src="assets/img/churn_dashboard.jpg" alt="Dashboard de Power BI del proyecto de churn: clientes por monto mensual, impacto del tipo de contrato, abandonos por ciudad, método de pago y antigüedad" loading="lazy" width="1378" height="773">
+              <figcaption class="label" data-i18n="p3_fig">Dashboard de KPIs en Power BI · clic para ampliar</figcaption>
+            </figure>
+          </a>
+        </article>
+
+        <h3 class="subtitulo" data-i18n="dev_titulo">En desarrollo</h3>
+        <div class="lista">
+          <div><span class="label">P3</span><strong data-i18n="dev1_t">App de Power Platform</strong><span data-i18n="dev1">Solicitudes con Power Apps, aprobación en Power Automate y reporte en Power BI.</span></div>
+          <div><span class="label">P4</span><strong data-i18n="dev2_t">Transformación digital</strong><span data-i18n="dev2">Requisitos, historias de usuario, Scrum y procesos BPMN actual y propuesto.</span></div>
+          <div><span class="label">P5</span><strong data-i18n="dev3_t">Pipeline ETL</strong><span data-i18n="dev3">API pública, Python, BigQuery y reporte en Looker Studio.</span></div>
         </div>
 
-        <h3 class="subtitulo">Proyectos académicos · UPC</h3>
-        <div class="siguientes" aria-label="Proyectos académicos">
-          <div><span class="label">2025</span><strong>Predicción de churn en telecomunicaciones</strong><span>Pipeline de datos reproducible en Python (pandas) y modelo XGBoost que superó en 17 % el AUC del modelo base. Dashboard de KPIs en Power BI y despliegue en Power BI Service y Streamlit Cloud.</span></div>
-          <div><span class="label">2024</span><strong>Plataforma web de gestión de datos</strong><span>Java (Spring Boot), Angular, APIs REST y PostgreSQL. Reduje 30 % los tiempos de consulta optimizando queries.</span></div>
-          <div><span class="label">2023</span><strong>Infraestructura web de alta disponibilidad</strong><span>Microsoft Azure: máquina virtual Ubuntu, red virtual, balanceador de carga y Azure SQL Database, con discos redundantes y comparación de costos entre regiones.</span></div>
+        <h3 class="subtitulo" data-i18n="acad_titulo">Otros proyectos académicos · UPC</h3>
+        <div class="lista">
+          <div><span class="label">2024</span><strong data-i18n="acad1_t">Plataforma web de gestión de datos</strong><span data-i18n="acad1">Java (Spring Boot), Angular, APIs REST y PostgreSQL. Reduje 30 % los tiempos de consulta optimizando queries.</span></div>
+          <div><span class="label">2023</span><strong data-i18n="acad2_t">Infraestructura web de alta disponibilidad</strong><span data-i18n="acad2">Microsoft Azure: máquina virtual Ubuntu, red virtual, balanceador de carga y Azure SQL Database, con discos redundantes y comparación de costos entre regiones.</span></div>
         </div>
       </div>
     </section>
 
     <section id="experiencia">
       <div class="wrap">
-        <div class="titulo">
-          <span class="label">Experiencia</span>
-          <p>Trabajo con indicadores de calidad y tiempo en entornos corporativos internacionales, con el inglés como idioma de trabajo.</p>
+        <div class="titulo revelar">
+          <span class="label" data-i18n="exp_label">Experiencia</span>
+          <p data-i18n="exp_intro">Trabajo con indicadores de calidad y tiempo en entornos corporativos internacionales, con el inglés como idioma de trabajo.</p>
         </div>
-        <div class="experiencia">
+        <div class="experiencia revelar">
           <article>
-            <span class="label">Dic 2025 – Jun 2026</span>
+            <span class="label" data-i18n="exp1_fecha">Dic 2025 – Jun 2026</span>
             <div>
               <h3>Customer Expert Agent · Teleperformance</h3>
-              <p class="lugar">Lima, Perú · campaña ecoATM/Gazelle para clientes de EE. UU.</p>
+              <p class="lugar" data-i18n="exp1_lugar">Lima, Perú · campaña ecoATM/Gazelle para clientes de EE. UU.</p>
               <ul>
-                <li>Mantuve más de 80 % de cumplimiento en mis métricas de calidad y tiempo de atención, con alto volumen diario de consultas.</li>
-                <li>Reduje 15 % mi tiempo promedio de resolución al priorizar casos según mis indicadores en Salesforce CRM y Oracle APEX.</li>
-                <li>Atendí en inglés; nivel C1 en la evaluación interna de la empresa.</li>
+                <li data-i18n="exp1_b1">Mantuve más de 80 % de cumplimiento en mis métricas de calidad y tiempo de atención, con alto volumen diario de consultas.</li>
+                <li data-i18n="exp1_b2">Reduje 15 % mi tiempo promedio de resolución al priorizar casos según mis indicadores en Salesforce CRM y Oracle APEX.</li>
+                <li data-i18n="exp1_b3">Atendí en inglés; nivel C1 en la evaluación interna de la empresa.</li>
               </ul>
             </div>
           </article>
           <article>
-            <span class="label">Dic 2024 – Mar 2025</span>
+            <span class="label" data-i18n="exp2_fecha">Dic 2024 – Mar 2025</span>
             <div>
               <h3>Restaurant Crew Member · McDonald's (Work &amp; Travel)</h3>
-              <p class="lugar">Nueva Jersey, EE. UU.</p>
+              <p class="lugar" data-i18n="exp2_lugar">Nueva Jersey, EE. UU.</p>
               <ul>
-                <li>Atención al cliente en inglés, en un equipo multicultural con metas de tiempo y calidad.</li>
+                <li data-i18n="exp2_b1">Atención al cliente en inglés, en un equipo multicultural con metas de tiempo y calidad.</li>
               </ul>
             </div>
           </article>
@@ -348,79 +494,77 @@
 
     <section id="ia">
       <div class="wrap">
-        <div class="titulo">
-          <span class="label">IA generativa aplicada</span>
-          <div style="display:grid; gap:16px">
-            <h2>Uso la IA para avanzar más rápido y verifico cada resultado.</h2>
-            <p>Integro asistentes de IA en mi flujo de trabajo: diseño los prompts, automatizo las tareas repetitivas y contrasto lo generado con los datos.</p>
+        <div class="titulo revelar">
+          <span class="label" data-i18n="ia_label">IA generativa aplicada</span>
+          <div class="bloque">
+            <h2 data-i18n="ia_titulo">Uso la IA para avanzar más rápido y verifico cada resultado.</h2>
+            <p data-i18n="ia_intro">Integro asistentes de IA en mi flujo de trabajo: diseño los prompts, automatizo las tareas repetitivas y contrasto lo generado con los datos.</p>
           </div>
         </div>
-        <div class="pilares">
-          <div><span class="label">Prompting</span><h3>Prompts estructurados</h3>
-            <p>Defino contexto, rol, restricciones y formato de salida para obtener resultados consistentes y reutilizables.</p></div>
-          <div><span class="label">Automatización</span><h3>Agentes de IA</h3>
-            <p>Agentes que generan y prueban código, consultas SQL y documentación, conectados a la terminal, Git y la base de datos.</p></div>
-          <div><span class="label">Control</span><h3>Validación humana</h3>
-            <p>Cada cifra se contrasta con una segunda fuente. En el proyecto de cartera, esa revisión detectó y corrigió dos errores de la simulación.</p></div>
+        <div class="pilares revelar">
+          <div><span class="label">Prompting</span><h3 data-i18n="ia1_t">Prompts estructurados</h3>
+            <p data-i18n="ia1">Defino contexto, rol, restricciones y formato de salida para obtener resultados consistentes y reutilizables.</p></div>
+          <div><span class="label" data-i18n="ia2_l">Automatización</span><h3 data-i18n="ia2_t">Agentes de IA</h3>
+            <p data-i18n="ia2">Agentes que generan y prueban código, consultas SQL y documentación, conectados a la terminal, Git y la base de datos.</p></div>
+          <div><span class="label" data-i18n="ia3_l">Control</span><h3 data-i18n="ia3_t">Validación humana</h3>
+            <p data-i18n="ia3">Cada cifra se contrasta con una segunda fuente. En el proyecto de cartera, esa revisión detectó y corrigió dos errores de la simulación.</p></div>
         </div>
-        <p class="flujo" aria-label="Flujo de trabajo con IA">
-          Pregunta de negocio <i>→</i> prompt con contexto <i>→</i> código generado <i>→</i> pruebas y verificación <i>→</i> hallazgo documentado
-        </p>
+        <p class="flujo revelar" data-i18n="ia_flujo"><span>Pregunta de negocio</span><i>→</i><span>Prompt con contexto</span><i>→</i><span>Código generado</span><i>→</i><span>Pruebas y verificación</span><i>→</i><span>Hallazgo documentado</span></p>
       </div>
     </section>
 
     <section id="habilidades">
       <div class="wrap">
-        <div class="titulo">
-          <span class="label">Habilidades</span>
-          <p>Cada herramienta indica dónde la apliqué: P1 y P2 son los proyectos de este portafolio, UPC los proyectos académicos y TP mi trabajo en Teleperformance.</p>
+        <div class="titulo revelar">
+          <span class="label" data-i18n="hab_label">Habilidades</span>
+          <p data-i18n="hab_intro">Cada herramienta indica dónde la apliqué: P1 y P2 son los proyectos de este portafolio, UPC los proyectos académicos y TP mi trabajo en Teleperformance.</p>
         </div>
-        <div class="habilidades">
-          <div><h3>Datos y BI</h3><ul><li>SQL avanzado y PostgreSQL <small>P1 · UPC</small></li><li>Power BI: DAX, Power Query <small>UPC</small></li><li>Excel avanzado y macros <small>certificado</small></li><li>Python: pandas <small>P1 · P2 · UPC</small></li></ul></div>
-          <div><h3>Programación y nube</h3><ul><li>scikit-learn, XGBoost <small>P2 · UPC</small></li><li>Streamlit <small>P2 · UPC</small></li><li>Java, Angular, APIs REST <small>UPC</small></li><li>Microsoft Azure, Linux <small>UPC</small></li></ul></div>
-          <div><h3>IA generativa</h3><ul><li>Prompt engineering <small>P1 · P2</small></li><li>Automatización con agentes <small>P1 · P2</small></li><li>ChatGPT, Gemini y Claude</li><li>Validación de resultados <small>P1 · P2</small></li></ul></div>
-          <div><h3>Negocio y gestión</h3><ul><li>Finanzas y riesgo crediticio <small>P1</small></li><li>Requisitos, Scrum, PMBOK <small>SFC</small></li><li>Salesforce CRM, Oracle APEX <small>TP</small></li><li>Power Apps, Power Automate <small>en curso</small></li></ul></div>
+        <div class="habilidades revelar">
+          <div><h3 data-i18n="hab1">Datos y BI</h3><ul><li data-i18n="hab1a">SQL avanzado y PostgreSQL <small>P1 · UPC</small></li><li>Power BI: DAX, Power Query <small>P1 · UPC</small></li><li data-i18n="hab1c">Excel avanzado y macros <small>cert.</small></li><li>Python: pandas <small>P1 · P2 · UPC</small></li></ul></div>
+          <div><h3 data-i18n="hab2">Programación y nube</h3><ul><li>scikit-learn, XGBoost <small>P2 · UPC</small></li><li>Streamlit <small>P2 · UPC</small></li><li>Java, Angular, APIs REST <small>UPC</small></li><li>Microsoft Azure, Linux <small>UPC</small></li></ul></div>
+          <div><h3 data-i18n="hab3">IA generativa</h3><ul><li>Prompt engineering <small>P1 · P2</small></li><li data-i18n="hab3b">Automatización con agentes <small>P1 · P2</small></li><li>ChatGPT, Gemini, Claude</li><li data-i18n="hab3d">Validación de resultados <small>P1 · P2</small></li></ul></div>
+          <div><h3 data-i18n="hab4">Negocio y gestión</h3><ul><li data-i18n="hab4a">Finanzas y riesgo crediticio <small>P1</small></li><li data-i18n="hab4b">Requisitos, Scrum, PMBOK <small>SFC</small></li><li>Salesforce CRM, Oracle APEX <small>TP</small></li><li data-i18n="hab4d">Power Apps, Power Automate <small>en curso</small></li></ul></div>
         </div>
       </div>
     </section>
 
     <section id="certificaciones">
       <div class="wrap">
-        <div class="titulo">
-          <span class="label">Certificaciones</span>
-          <p>Formación complementaria en datos, Excel, metodologías ágiles e infraestructura TI. Los enlaces llevan a la verificación oficial de Coursera.</p>
+        <div class="titulo revelar">
+          <span class="label" data-i18n="cert_label">Certificaciones</span>
+          <p data-i18n="cert_intro">Formación complementaria en datos, Excel, metodologías ágiles e infraestructura TI. Los enlaces llevan a la verificación oficial de Coursera.</p>
         </div>
-        <div class="certificados">
+        <div class="certificados revelar">
           <div class="grupo">
-            <h3>Datos y programación</h3>
+            <h3 data-i18n="cert_g1">Datos y programación</h3>
             <ul>
-            <li><span class="label">Nov 2025</span><div><strong><a href="https://coursera.org/verify/specialization/NC3E9JHCMSTW">Python for Everybody</a></strong><span>Especialización de 5 cursos · University of Michigan</span></div></li>
-            <li><span class="label">Nov 2025</span><div><strong><a href="https://coursera.org/verify/specialization/TU31S1QBPYMN">Databases for Data Scientists</a></strong><span>Especialización de 3 cursos: diseño relacional, SQL y tendencias · University of Colorado Boulder</span></div></li>
-            <li><span class="label">Jun 2026</span><div><strong><a href="https://coursera.org/verify/5E690DRWZO19">Introduction to Data Analytics</a></strong><span>Meta</span></div></li>
-            <li><span class="label">Jun 2026</span><div><strong><a href="https://coursera.org/verify/JKEC2W7V40X2">Statistics Foundations</a></strong><span>Meta</span></div></li>
-            <li><span class="label">Jun 2026</span><div><strong>Marketing Analytics Foundation y Marketing Analytics with Meta</strong><span>2 cursos · Meta</span></div></li>
+              <li><span class="label">2025-11</span><div><strong><a href="https://coursera.org/verify/specialization/NC3E9JHCMSTW">Python for Everybody</a></strong><span data-i18n="cert_py">Especialización de 5 cursos · University of Michigan</span></div></li>
+              <li><span class="label">2025-11</span><div><strong><a href="https://coursera.org/verify/specialization/TU31S1QBPYMN">Databases for Data Scientists</a></strong><span data-i18n="cert_db">Especialización de 3 cursos: diseño relacional, SQL y tendencias · University of Colorado Boulder</span></div></li>
+              <li><span class="label">2026-06</span><div><strong><a href="https://coursera.org/verify/5E690DRWZO19">Introduction to Data Analytics</a></strong><span>Meta</span></div></li>
+              <li><span class="label">2026-06</span><div><strong><a href="https://coursera.org/verify/JKEC2W7V40X2">Statistics Foundations</a></strong><span>Meta</span></div></li>
+              <li><span class="label">2026-06</span><div><strong>Marketing Analytics Foundation · Marketing Analytics with Meta</strong><span data-i18n="cert_mk">2 cursos · Meta</span></div></li>
             </ul>
           </div>
           <div class="grupo">
-            <h3>Excel y ofimática</h3>
+            <h3 data-i18n="cert_g2">Excel y ofimática</h3>
             <ul>
-            <li><span class="label">Ago 2025</span><div><strong>Excel Avanzado</strong><span>24 horas académicas · Zegel IPAE</span></div></li>
-            <li><span class="label">May 2024</span><div><strong><a href="https://coursera.org/verify/7V9T3UBVBW3K">Excel Skills for Business: Advanced</a></strong><span>También Intermediate II · Macquarie University</span></div></li>
-            <li><span class="label">May 2024</span><div><strong><a href="https://coursera.org/verify/GFEEQLZTSSZG">Competencias digitales: herramientas de ofimática</a></strong><span>Universitat Autònoma de Barcelona</span></div></li>
+              <li><span class="label">2025-08</span><div><strong>Excel Avanzado</strong><span data-i18n="cert_xl">24 horas académicas · Zegel IPAE</span></div></li>
+              <li><span class="label">2024-05</span><div><strong><a href="https://coursera.org/verify/7V9T3UBVBW3K">Excel Skills for Business: Advanced</a></strong><span data-i18n="cert_xl2">También Intermediate II · Macquarie University</span></div></li>
+              <li><span class="label">2024-05</span><div><strong><a href="https://coursera.org/verify/GFEEQLZTSSZG" data-i18n="cert_of">Competencias digitales: herramientas de ofimática</a></strong><span>Universitat Autònoma de Barcelona</span></div></li>
             </ul>
           </div>
           <div class="grupo">
-            <h3>Metodologías ágiles</h3>
+            <h3 data-i18n="cert_g3">Metodologías ágiles</h3>
             <ul>
-            <li><span class="label">Mar 2024</span><div><strong>Scrum Fundamentals Certified (SFC)</strong><span>SCRUMstudy · VMEdu</span></div></li>
-            <li><span class="label">Abr 2025</span><div><strong>Scrum Master Certification</strong><span>4 cursos: introducción, metodologías, escalado y combinación con otros marcos ágiles · LearnQuest</span></div></li>
+              <li><span class="label">2024-03</span><div><strong>Scrum Fundamentals Certified (SFC)</strong><span>SCRUMstudy · VMEdu</span></div></li>
+              <li><span class="label">2025-04</span><div><strong>Scrum Master Certification</strong><span data-i18n="cert_sm">4 cursos: introducción, metodologías, escalado y combinación con otros marcos ágiles · LearnQuest</span></div></li>
             </ul>
           </div>
           <div class="grupo">
-            <h3>Infraestructura TI e idiomas</h3>
+            <h3 data-i18n="cert_g4">Infraestructura TI e idiomas</h3>
             <ul>
-            <li><span class="label">Abr 2025</span><div><strong>Google IT Support</strong><span>5 cursos: soporte técnico, redes, sistemas operativos, administración de sistemas y seguridad · Google</span></div></li>
-            <li><span class="label">Inglés</span><div><strong>TOEFL ITP · 580 puntos</strong><span>B2 general, Listening C1</span></div></li>
+              <li><span class="label">2025-04</span><div><strong>Google IT Support</strong><span data-i18n="cert_it">5 cursos: soporte técnico, redes, sistemas operativos, administración de sistemas y seguridad · Google</span></div></li>
+              <li><span class="label" data-i18n="cert_en_l">Inglés</span><div><strong data-i18n="cert_toefl">TOEFL ITP · 580 puntos</strong><span data-i18n="cert_toefl2">B2 general, Listening C1</span></div></li>
             </ul>
           </div>
         </div>
@@ -428,24 +572,23 @@
     </section>
 
     <section id="contacto">
-      <div class="wrap ficha">
-        <span class="label">Sobre mí</span>
+      <div class="wrap contacto">
+        <span class="label" data-i18n="sobre_label">Sobre mí</span>
         <div>
           <div class="texto">
-            <p>Me interesa trabajar donde los datos cambian decisiones: banca, créditos y cobranzas, seguros y prevención de fraude,
-              consumo masivo y farmacéutica.</p>
-            <p>Combino la base técnica de sistemas con formación en contabilidad, finanzas y gestión de proyectos, y experiencia atendiendo clientes de EE. UU. con métricas de calidad. Agrego proyectos nuevos de forma continua.</p>
+            <p data-i18n="sobre1">Me interesa trabajar donde los datos cambian decisiones: banca, créditos y cobranzas, seguros y prevención de fraude, consumo masivo y farmacéutica.</p>
+            <p data-i18n="sobre2">Combino la base técnica de sistemas con formación en contabilidad, finanzas y gestión de proyectos, y experiencia atendiendo clientes de EE. UU. con métricas de calidad.</p>
           </div>
           <dl class="perfil">
-            <div><dt>Formación</dt><dd>Ingeniería de Sistemas de Información, UPC · 10.º ciclo</dd></div>
-            <div><dt>Egreso</dt><dd>Diciembre de 2026</dd></div>
-            <div><dt>Idiomas</dt><dd>Español nativo · Inglés C1 (TOEFL ITP 580; C1 en la evaluación de Teleperformance)</dd></div>
-            <div><dt>Busco</dt><dd>Prácticas preprofesionales en análisis de datos, BI y transformación digital · disponibilidad inmediata</dd></div>
+            <div><dt data-i18n="d_form">Formación</dt><dd data-i18n="d_form_v">Ingeniería de Sistemas de Información, UPC · 10.º ciclo</dd></div>
+            <div><dt data-i18n="d_egr">Egreso</dt><dd data-i18n="d_egr_v">Diciembre de 2026</dd></div>
+            <div><dt data-i18n="d_idi">Idiomas</dt><dd data-i18n="d_idi_v">Español nativo · Inglés C1 (TOEFL ITP 580; C1 en la evaluación de Teleperformance)</dd></div>
+            <div><dt data-i18n="d_bus">Busco</dt><dd data-i18n="d_bus_v">Prácticas preprofesionales en análisis de datos, BI y transformación digital · disponibilidad inmediata</dd></div>
           </dl>
           <div class="cta">
-            <p>¿Buscas un practicante de datos o BI? Escríbeme por LinkedIn.</p>
-            <a class="boton" href="https://www.linkedin.com/in/julio-garcia-jara-39a68327b/">Contactar por LinkedIn →</a>
-            <a href="https://github.com/ego4men">Ver GitHub</a>
+            <p data-i18n="cta">¿Buscas un practicante de datos o BI? Conversemos.</p>
+            <a class="boton" href="https://www.linkedin.com/in/julio-garcia-jara-39a68327b/" data-i18n="cta_li">Escribirme por LinkedIn</a>
+            <a class="boton sec" href="assets/Julio_Garcia_Jara_CV.pdf" download data-i18n="hero_cv">Descargar CV</a>
           </div>
         </div>
       </div>
@@ -455,8 +598,292 @@
   <footer>
     <div class="wrap">
       <span>© 2026 Julio García Jara</span>
-      <span>Datos públicos o sintéticos en todos los proyectos · Actualizado en octubre de 2026</span>
+      <span data-i18n="pie">Datos públicos o sintéticos en todos los proyectos · Actualizado en octubre de 2026</span>
     </div>
   </footer>
+
+  <script>
+  (function () {
+    document.documentElement.classList.add('js');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ------------------------------------------------------------------
+       Idioma: el español está en el HTML; aquí solo va el inglés
+       ------------------------------------------------------------------ */
+    var EN = {
+      nav_proyectos: 'Projects', nav_experiencia: 'Experience', nav_ia: 'Applied AI', nav_habilidades: 'Skills',
+      nav_certificaciones: 'Certifications', nav_contacto: 'Contact',
+      hero_estado: 'Data analysis &amp; BI intern · Available now · Lima, Peru',
+      hero_titulo: 'Data analysis for credit risk, collections and fraud. <span>From the SQL query to the decision.</span>',
+      hero_lead: 'Final-year Information Systems Engineering student at UPC (graduating December 2026), with experience serving U.S. customers in English. I work with SQL, Power BI, Python, machine learning and generative AI.',
+      hero_ver: 'See projects', hero_cv: 'Download CV (Spanish)',
+      proy_label: 'Projects', proy_intro: 'Each project starts from a business question and ends with a concrete recommendation. The panels are interactive and use each analysis’ real results.',
+      p1_sector: 'Credit &amp; collections · synthetic data', p1_titulo: 'Loan portfolio and delinquency analysis',
+      p1_desc: 'Portfolio of 5,562 consumer, micro-business and auto loans across 10 branches, modeled in PostgreSQL. It measures the delinquency ratio, roll rates between past-due buckets and vintage quality, and builds a prioritized daily collections list.',
+      caso_pregunta: 'Question', caso_reco: 'Recommendation',
+      p1_pregunta: 'Where is the risk concentrated, and which loans should collections work on today?',
+      p1_reco: 'Focus collections on 1–60 days past due, where recovery is still likely, and review micro-business origination.',
+      p1_d1: '30+ days delinquency at cut-off', p1_d2: 'of 1–30 days past due cure within a month', p1_d3: 'micro-business delinquency, over twice consumer loans',
+      ver_repo: 'Repository and findings', p1_pbi: 'Power BI dashboard',
+      rr_titulo: 'Monthly roll rates', rr_ayuda: 'Row: past-due bucket this month. Column: bucket next month. Hover or tap a cell.',
+      spark_titulo: '30+ days delinquency ratio · Jul 2024 – Sep 2026',
+      p2_sector: 'Insurance &amp; fraud prevention · public dataset', p2_titulo: 'Auto insurance fraud detection',
+      p2_desc: 'Calibrated XGBoost model that ranks which claims to investigate among 15,419 cases with 6% fraud. It uses time-based validation (trained on 1994–1995, tested on 1996) and a cost-based alert threshold.',
+      p2_pregunta: 'Which claims should be investigated to catch more fraud with less effort?',
+      p2_reco: 'Investigate by risk score with a cost-based threshold, and retrain yearly because of data drift.',
+      p2_d1: 'of fraud caught at the minimum-cost threshold', p2_d2: 'of fraud caught reviewing only 20% of claims', p2_d3: 'PR-AUC vs. random (ROC-AUC 0.790)',
+      p2_demo: 'Live demo',
+      sim_titulo: 'Cost simulator', sim_ayuda: 'Computed live from the model’s 4,083 predictions on 1996 claims.',
+      sim_label: 'A missed fraud costs as much as investigating…',
+      sim_k1: 'optimal alert threshold', sim_k2: 'of claims to investigate', sim_k3: 'of fraud caught', sim_k4: 'cost vs. no model',
+      p3_sector: 'Telecom · team project · IBM Telco dataset', p3_titulo: 'Customer churn prediction',
+      p3_desc: 'Business Predictive Analytics course project with a team of six. We compared logistic regression, decision tree, Random Forest and XGBoost on 7,043 customers, and published a KPI dashboard in Power BI and an app on Streamlit Cloud.',
+      p3_rol_t: 'My role', p3_rol: 'Data collection, cleaning and transformation in a reproducible pandas pipeline, and contribution to the Power BI dashboard.',
+      p3_reco: 'Move month-to-month customers to yearly contracts and onboard new customers during their first 3 to 6 months.',
+      p3_d1: 'XGBoost AUC on test data', p3_d2: 'AUC over the baseline logistic regression (0.721)', p3_d3: 'churned customers, analyzed by contract and payment',
+      p3_fig: 'Power BI KPI dashboard · click to enlarge',
+      dev_titulo: 'In progress', dev1_t: 'Power Platform app', dev1: 'Requests in Power Apps, approval flow in Power Automate and a Power BI report.',
+      dev2_t: 'Digital transformation case', dev2: 'Requirements, user stories, Scrum and as-is / to-be BPMN processes.',
+      dev3_t: 'ETL pipeline', dev3: 'Public API, Python, BigQuery and a Looker Studio report.',
+      acad_titulo: 'Other academic projects · UPC',
+      acad1_t: 'Web data management platform', acad1: 'Java (Spring Boot), Angular, REST APIs and PostgreSQL. Cut query times by 30% by optimizing queries.',
+      acad2_t: 'High-availability web infrastructure', acad2: 'Microsoft Azure: Ubuntu VM, virtual network, load balancer and Azure SQL Database, with redundant disks and a cross-region cost comparison.',
+      exp_label: 'Experience', exp_intro: 'I work with quality and time KPIs in international corporate settings, using English as my working language.',
+      exp1_fecha: 'Dec 2025 – Jun 2026', exp1_lugar: 'Lima, Peru · ecoATM/Gazelle campaign for U.S. customers',
+      exp1_b1: 'Kept over 80% compliance on my quality and handling-time metrics with a high daily case volume.',
+      exp1_b2: 'Cut my average resolution time by 15% by prioritizing cases with my KPIs in Salesforce CRM and Oracle APEX.',
+      exp1_b3: 'Served customers in English; rated C1 in the company’s internal assessment.',
+      exp2_fecha: 'Dec 2024 – Mar 2025', exp2_lugar: 'New Jersey, USA', exp2_b1: 'Customer service in English in a multicultural team with time and quality targets.',
+      ia_label: 'Applied generative AI', ia_titulo: 'I use AI to move faster, and I verify every result.',
+      ia_intro: 'I build AI assistants into my workflow: I design the prompts, automate repetitive tasks and check the output against the data.',
+      ia1_t: 'Structured prompts', ia1: 'I define context, role, constraints and output format to get consistent, reusable results.',
+      ia2_l: 'Automation', ia2_t: 'AI agents', ia2: 'Agents that write and test code, SQL queries and documentation, connected to the terminal, Git and the database.',
+      ia3_l: 'Control', ia3_t: 'Human validation', ia3: 'Every figure is checked against a second source. In the loan portfolio project, that review caught and fixed two errors in the simulation.',
+      ia_flujo: '<span>Business question</span><i>→</i><span>Prompt with context</span><i>→</i><span>Generated code</span><i>→</i><span>Tests and verification</span><i>→</i><span>Documented finding</span>',
+      hab_label: 'Skills', hab_intro: 'Each tool shows where I used it: P1 and P2 are this portfolio’s projects, UPC my academic projects and TP my job at Teleperformance.',
+      hab1: 'Data &amp; BI', hab1a: 'Advanced SQL and PostgreSQL <small>P1 · UPC</small>', hab1c: 'Advanced Excel and macros <small>cert.</small>',
+      hab2: 'Programming &amp; cloud', hab3: 'Generative AI', hab3b: 'Automation with agents <small>P1 · P2</small>', hab3d: 'Output validation <small>P1 · P2</small>',
+      hab4: 'Business &amp; management', hab4a: 'Finance and credit risk <small>P1</small>', hab4b: 'Requirements, Scrum, PMBOK <small>SFC</small>', hab4d: 'Power Apps, Power Automate <small>learning</small>',
+      cert_label: 'Certifications', cert_intro: 'Additional training in data, Excel, agile methods and IT infrastructure. Links go to Coursera’s official verification.',
+      cert_g1: 'Data &amp; programming', cert_py: '5-course specialization · University of Michigan', cert_db: '3-course specialization: relational design, SQL and trends · University of Colorado Boulder',
+      cert_mk: '2 courses · Meta', cert_g2: 'Excel &amp; office tools', cert_xl: '24 academic hours · Zegel IPAE', cert_xl2: 'Also Intermediate II · Macquarie University',
+      cert_of: 'Digital skills: office tools', cert_g3: 'Agile methods', cert_sm: '4 courses: introduction, methodologies, scaling and combining with other agile frameworks · LearnQuest',
+      cert_g4: 'IT infrastructure &amp; languages', cert_it: '5 courses: tech support, networking, operating systems, system administration and security · Google',
+      cert_en_l: 'English', cert_toefl: 'TOEFL ITP · 580 points', cert_toefl2: 'B2 overall, Listening C1',
+      sobre_label: 'About me', sobre1: 'I want to work where data changes decisions: banking, credit and collections, insurance and fraud prevention, consumer goods and pharma.',
+      sobre2: 'I combine a systems engineering background with training in accounting, finance and project management, plus experience serving U.S. customers under quality KPIs.',
+      d_form: 'Education', d_form_v: 'Information Systems Engineering, UPC · 10th term', d_egr: 'Graduation', d_egr_v: 'December 2026',
+      d_idi: 'Languages', d_idi_v: 'Spanish (native) · English C1 (TOEFL ITP 580; C1 in Teleperformance’s assessment)',
+      d_bus: 'Looking for', d_bus_v: 'Internships in data analysis, BI and digital transformation · available now',
+      cta: 'Looking for a data or BI intern? Let’s talk.', cta_li: 'Message me on LinkedIn',
+      pie: 'Public or synthetic data in every project · Updated October 2026'
+    };
+    var nodos = document.querySelectorAll('[data-i18n]');
+    var ES = {};
+    nodos.forEach(function (n) { ES[n.dataset.i18n] = n.innerHTML; });
+    var idioma = document.documentElement.lang === 'en' ? 'en' : 'es';
+    var cifras = document.querySelectorAll('.datos b');
+    cifras.forEach(function (b) { b.dataset.es = b.textContent; });
+
+    function fmtPct(v, dec) {
+      var s = (v * 100).toFixed(dec);
+      return idioma === 'es' ? s.replace('.', ',') + ' %' : s + '%';
+    }
+    function cifraEn(s) { return s.replace(/(\d),(\d)/g, '$1.$2').replace(/(\d) %/g, '$1%').replace(/(\d) (\d{3})/g, '$1,$2'); }
+
+    function aplicarIdioma(l) {
+      idioma = l;
+      document.documentElement.lang = l;
+      nodos.forEach(function (n) { var k = n.dataset.i18n; n.innerHTML = (l === 'en' && EN[k]) ? EN[k] : ES[k]; });
+      cifras.forEach(function (b) { b.textContent = l === 'en' ? cifraEn(b.dataset.es) : b.dataset.es; });
+      document.getElementById('btn-idioma').innerHTML = l === 'en' ? 'ES / <b>EN</b>' : '<b>ES</b> / EN';
+      try { localStorage.setItem('idioma', l); } catch (e) {}
+      render();
+    }
+    document.getElementById('btn-idioma').addEventListener('click', function () { aplicarIdioma(idioma === 'es' ? 'en' : 'es'); });
+
+    /* Tema claro / oscuro */
+    document.getElementById('btn-tema').addEventListener('click', function () {
+      var root = document.documentElement;
+      var oscuro = root.dataset.theme ? root.dataset.theme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      root.dataset.theme = oscuro ? 'light' : 'dark';
+      try { localStorage.setItem('tema', root.dataset.theme); } catch (e) {}
+    });
+
+    /* Borde de la barra al hacer scroll */
+    var nav = document.querySelector('nav.top');
+    window.addEventListener('scroll', function () { nav.classList.toggle('scrolled', window.scrollY > 8); }, { passive: true });
+
+    /* Aparición suave: solo para lo que está debajo de la primera pantalla */
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('oculto'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.revelar').forEach(function (el) {
+        if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('oculto'); io.observe(el); }
+      });
+    }
+
+    /* ------------------------------------------------------------------
+       Consola de la portada: consulta → resultado
+       ------------------------------------------------------------------ */
+    var hallazgos = [
+      { codigo: '<span class="c">-- P1 · roll rates con funciones de ventana</span>\n<span class="k">SELECT</span> tramo_anterior, tramo_actual, <span class="k">COUNT</span>(*)\n<span class="k">FROM</span> (<span class="k">SELECT</span> tramo_mora <span class="k">AS</span> tramo_actual,\n        <span class="k">LAG</span>(tramo_mora) <span class="k">OVER</span> (\n          <span class="k">PARTITION BY</span> credito_id\n          <span class="k">ORDER BY</span> fecha_cierre) <span class="k">AS</span> tramo_anterior\n      <span class="k">FROM</span> cierre_mensual) t\n<span class="k">WHERE</span> tramo_anterior = <span class="s">\'3. 61-90\'</span>\n<span class="k">GROUP BY</span> 1, 2;',
+        cifra: 0.476, dec: 1, es: 'de los créditos con 61–90 días de atraso cae a más de 90 días al mes siguiente.',
+        en: 'of loans 61–90 days past due roll to 90+ the following month.', fes: 'P1 · Cartera y morosidad · datos sintéticos', fen: 'P1 · Loan portfolio · synthetic data' },
+      { codigo: '<span class="c"># P2 · fraude capturado revisando el top 20 %</span>\n<span class="k">def</span> captura_en_top(y, prob, fraccion):\n    n = ceil(len(prob) * fraccion)\n    top = np.argsort(-prob)[:n]\n    <span class="k">return</span> y[top].sum() / y.sum()\n\ncaptura_en_top(y_1996, prob, <span class="s">0.20</span>)',
+        cifra: 0.474, dec: 0, es: 'del fraude se detecta revisando solo el 20 % de los reclamos más riesgosos.',
+        en: 'of fraud is caught by reviewing only the riskiest 20% of claims.', fes: 'P2 · Fraude en seguros · dataset público', fen: 'P2 · Insurance fraud · public dataset' },
+      { codigo: '<span class="c"># P2 · umbral que minimiza el costo total</span>\ncosto = alertas * COSTO_INVESTIGAR \\\n      + fraudes_perdidos * COSTO_FRAUDE\numbral = min(umbrales, key=costo)\n\nahorro = <span class="s">1</span> - costo_modelo / costo_sin_modelo',
+        cifra: -0.484, dec: 0, es: 'de costo de investigación y fraude frente a no usar el modelo.',
+        en: 'in investigation and fraud cost compared with not using the model.', fes: 'P2 · Fraude en seguros · dataset público', fen: 'P2 · Insurance fraud · public dataset' }
+    ];
+    var actual = 0, tipeo = null, inicio = 0, avance = 0, DURACION = 7000, pausado = reduce, pausaHover = false;
+    var elCodigo = document.getElementById('consola-codigo'), elCifra = document.getElementById('consola-cifra'),
+        elTexto = document.getElementById('consola-texto'), elFuente = document.getElementById('consola-fuente'),
+        elProg = document.getElementById('consola-progreso'), tabs = document.querySelectorAll('.consola .tab');
+
+    function mostrarSalida(h) {
+      elCifra.textContent = (h.cifra < 0 ? '−' : '') + fmtPct(Math.abs(h.cifra), h.dec);
+      elTexto.textContent = idioma === 'en' ? h.en : h.es;
+      elFuente.textContent = idioma === 'en' ? h.fen : h.fes;
+    }
+    function escribir(h) {
+      clearInterval(tipeo);
+      if (reduce) { elCodigo.innerHTML = h.codigo; return; }
+      /* tipeo por caracteres visibles, conservando las etiquetas de color */
+      var partes = h.codigo.split(/(<[^>]+>)/), total = h.codigo.replace(/<[^>]+>/g, '').length, visibles = 0, paso = Math.ceil(total / 55);
+      tipeo = setInterval(function () {
+        visibles = Math.min(total, visibles + paso);
+        var quedan = visibles, html = '';
+        for (var i = 0; i < partes.length; i++) {
+          var p = partes[i];
+          if (p.charAt(0) === '<') { html += p; continue; }
+          if (quedan <= 0) continue;
+          html += p.slice(0, quedan); quedan -= p.length;
+        }
+        elCodigo.innerHTML = html + (visibles < total ? '<span class="cursor"></span>' : '');
+        if (visibles >= total) clearInterval(tipeo);
+      }, 16);
+    }
+    function ir(i, manual) {
+      actual = i;
+      tabs.forEach(function (t, j) { t.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+      escribir(hallazgos[i]); mostrarSalida(hallazgos[i]);
+      inicio = performance.now(); avance = 0;
+      if (manual) { pausado = true; elProg.style.width = '100%'; }
+    }
+    tabs.forEach(function (t) { t.addEventListener('click', function () { ir(+t.dataset.i, true); }); });
+    var consola = document.getElementById('consola');
+    consola.addEventListener('mouseenter', function () { pausaHover = true; });
+    consola.addEventListener('mouseleave', function () { pausaHover = false; inicio = performance.now() - avance * DURACION; });
+    function bucle(ahora) {
+      if (!pausado && !pausaHover && !document.hidden) {
+        avance = (ahora - inicio) / DURACION;
+        elProg.style.width = Math.min(100, avance * 100) + '%';
+        if (avance >= 1) ir((actual + 1) % hallazgos.length, false);
+      }
+      requestAnimationFrame(bucle);
+    }
+    elCodigo.innerHTML = hallazgos[0].codigo;
+    if (!reduce) { ir(0, false); requestAnimationFrame(bucle); } else { elProg.style.width = '100%'; }
+
+    /* ------------------------------------------------------------------
+       P1 · Matriz de roll rates y evolución de la mora
+       ------------------------------------------------------------------ */
+    var TRAMOS = { es: ['Al día', '1–30', '31–60', '61–90', '90+'], en: ['Current', '1–30', '31–60', '61–90', '90+'] };
+    var RR = [[0.928, 0.071, 0.0, 0.0, 0.0], [0.733, 0.123, 0.143, 0.001, 0.0], [0.339, 0.055, 0.257, 0.342, 0.007],
+              [0.132, 0.016, 0.044, 0.331, 0.476], [0.047, 0.017, 0.0, 0.043, 0.892]];
+    var matriz = document.getElementById('matriz'), lectura = document.getElementById('lectura');
+    var seleccion = [3, 4];
+    function describir(i, j) {
+      var t = TRAMOS[idioma], v = fmtPct(RR[i][j], 1);
+      if (idioma === 'en') {
+        return i === j ? 'Of loans in <b>' + t[i] + '</b>, <b>' + v + '</b> stay in the same bucket next month.'
+                       : 'Of loans in <b>' + t[i] + '</b>, <b>' + v + '</b> move to <b>' + t[j] + '</b> next month.';
+      }
+      return i === j ? 'De los créditos en <b>' + t[i] + '</b>, el <b>' + v + '</b> sigue en el mismo tramo al mes siguiente.'
+                     : 'De los créditos en <b>' + t[i] + '</b>, el <b>' + v + '</b> pasa a <b>' + t[j] + '</b> al mes siguiente.';
+    }
+    function pintarMatriz() {
+      var t = TRAMOS[idioma], html = '<span></span>';
+      t.forEach(function (n) { html += '<span class="eje">' + n + '</span>'; });
+      RR.forEach(function (fila, i) {
+        html += '<span class="eje fila">' + t[i] + '</span>';
+        fila.forEach(function (v, j) {
+          var fondo = 'color-mix(in srgb, var(--accent) ' + Math.round(8 + v * 92) + '%, var(--surface))';
+          var tinta = v > 0.5 ? 'var(--bg)' : 'var(--ink)';
+          var sel = (i === seleccion[0] && j === seleccion[1]) ? ' sel' : '';
+          html += '<button class="celda' + sel + '" type="button" data-i="' + i + '" data-j="' + j + '" style="background:' + fondo + ';color:' + tinta +
+                  '" aria-label="' + t[i] + ' → ' + t[j] + ': ' + fmtPct(v, 1) + '">' + Math.round(v * 100) + '</button>';
+        });
+      });
+      matriz.innerHTML = html;
+      lectura.innerHTML = describir(seleccion[0], seleccion[1]);
+    }
+    function elegir(e) {
+      var c = e.target.closest('.celda'); if (!c) return;
+      seleccion = [+c.dataset.i, +c.dataset.j];
+      matriz.querySelectorAll('.celda').forEach(function (x) {
+        x.classList.toggle('sel', x === c);
+        x.classList.toggle('tenue', +x.dataset.i !== seleccion[0] && +x.dataset.j !== seleccion[1]);
+      });
+      lectura.innerHTML = describir(seleccion[0], seleccion[1]);
+    }
+    matriz.addEventListener('mouseover', elegir);
+    matriz.addEventListener('focusin', elegir);
+    matriz.addEventListener('click', elegir);
+    matriz.addEventListener('mouseleave', function () { matriz.querySelectorAll('.celda').forEach(function (x) { x.classList.remove('tenue'); }); });
+
+    var MORA = [2.85, 2.17, 1.42, 2.79, 4.63, 3.64, 3.46, 3.05, 2.12, 2.66, 2.72, 2.49, 2.79, 3.74, 3.16, 3.09, 2.33, 2.79, 4.27, 3.65, 3.38, 3.89, 3.05, 3.04, 3.66, 3.26, 4.91];
+    function pintarSpark() {
+      var svg = document.getElementById('spark'), W = 300, H = 70, max = 5.5, ancho = W - 44;
+      var pts = MORA.map(function (v, i) { return [i * ancho / (MORA.length - 1), H - 6 - v / max * (H - 14)]; });
+      var linea = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+      var area = linea + ' L' + ancho + ' ' + (H - 6) + ' L0 ' + (H - 6) + ' Z';
+      var u = pts[pts.length - 1];
+      svg.innerHTML = '<path d="' + area + '" fill="var(--accent)" opacity=".1"/>' +
+        '<path d="' + linea + '" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>' +
+        '<circle cx="' + u[0] + '" cy="' + u[1] + '" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>' +
+        '<text x="' + (u[0] + 8) + '" y="' + (u[1] + 4) + '" font-family="Fragment Mono, monospace" font-size="11" fill="var(--ink)">' + fmtPct(0.0491, 1) + '</text>';
+    }
+
+    /* ------------------------------------------------------------------
+       P2 · Simulador de costos con las predicciones reales de 1996
+       ------------------------------------------------------------------ */
+    var SIM = {"n":4083,"fraudes":213,"t":[0.005,0.01,0.015,0.02,0.025,0.03,0.035,0.04,0.045,0.05,0.055,0.06,0.065,0.07,0.075,0.08,0.085,0.09,0.095,0.1,0.105,0.11,0.115,0.12,0.125,0.13,0.135,0.14,0.145,0.15,0.155,0.16,0.165,0.17,0.175,0.18,0.185,0.19,0.195,0.2,0.205,0.21,0.215,0.22,0.225,0.23,0.235,0.24,0.245,0.25,0.255,0.26,0.265,0.27,0.275,0.28,0.285,0.29,0.295,0.3,0.305,0.31,0.315,0.32,0.325,0.33,0.335,0.34,0.345,0.35,0.355,0.36,0.365,0.37,0.375,0.38,0.385,0.39,0.395,0.4,0.405,0.41,0.415,0.42,0.425,0.43,0.435,0.44,0.445,0.45,0.455,0.46,0.465,0.47,0.475,0.48,0.485,0.49,0.495,0.5],"alertas":[4083,4083,2141,1877,1786,1699,1643,1591,1535,1467,1410,1355,1291,1241,1183,1128,1068,1019,965,912,870,828,779,749,704,664,631,594,551,520,474,444,426,398,374,343,324,305,287,269,251,234,211,196,174,159,148,134,124,108,88,81,74,67,56,47,40,38,35,31,27,25,22,19,17,16,15,10,10,10,9,9,9,7,7,7,7,7,7,7,7,4,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"detectados":[213,213,204,201,197,193,191,183,175,168,165,159,152,146,139,134,130,127,114,109,107,103,95,93,88,85,81,78,70,68,63,57,56,50,49,47,46,43,40,39,36,36,35,31,28,25,25,23,23,20,19,19,19,18,15,15,13,13,12,11,11,10,8,8,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,4,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]};
+    var ratio = document.getElementById('ratio');
+    function pintarSimulador() {
+      var r = +ratio.value, mejor = 0, costos = [];
+      for (var k = 0; k < SIM.t.length; k++) {
+        var c = SIM.alertas[k] + r * (SIM.fraudes - SIM.detectados[k]);
+        costos.push(c); if (c < costos[mejor]) mejor = k;
+      }
+      var base = Math.min(SIM.n, r * SIM.fraudes), ahorro = 1 - costos[mejor] / base;
+      document.getElementById('ratio-salida').textContent = r + (idioma === 'en' ? ' claims' : ' reclamos');
+      document.getElementById('k-umbral').textContent = fmtPct(SIM.t[mejor], 1);
+      document.getElementById('k-investigar').textContent = fmtPct(SIM.alertas[mejor] / SIM.n, 1);
+      document.getElementById('k-recall').textContent = fmtPct(SIM.detectados[mejor] / SIM.fraudes, 1);
+      document.getElementById('k-ahorro').textContent = '−' + fmtPct(Math.max(0, ahorro), 1);
+      var svg = document.getElementById('curva'), W = 320, H = 130, x0 = 6, y0 = 10, w = W - 12, h = H - 34;
+      var cmax = Math.max.apply(null, costos), cmin = Math.min.apply(null, costos);
+      function X(k) { return x0 + k / (SIM.t.length - 1) * w; }
+      function Y(c) { return y0 + (1 - (c - cmin) / ((cmax - cmin) || 1)) * h; }
+      var d = costos.map(function (c, k) { return (k ? 'L' : 'M') + X(k).toFixed(1) + ' ' + Y(c).toFixed(1); }).join(' ');
+      svg.innerHTML =
+        '<line x1="' + x0 + '" y1="' + (y0 + h) + '" x2="' + (x0 + w) + '" y2="' + (y0 + h) + '" stroke="var(--line)"/>' +
+        '<path d="' + d + '" fill="none" stroke="var(--ink-3)" stroke-width="1.5"/>' +
+        '<line x1="' + X(mejor) + '" y1="' + y0 + '" x2="' + X(mejor) + '" y2="' + (y0 + h) + '" stroke="var(--accent)" stroke-dasharray="3 3"/>' +
+        '<circle cx="' + X(mejor) + '" cy="' + Y(costos[mejor]) + '" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>' +
+        '<text x="' + x0 + '" y="' + (H - 6) + '">' + fmtPct(SIM.t[0], 1) + '</text>' +
+        '<text x="' + (x0 + w) + '" y="' + (H - 6) + '" text-anchor="end">' + fmtPct(SIM.t[SIM.t.length - 1], 0) + '</text>' +
+        '<text x="' + (x0 + w / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + (idioma === 'en' ? 'alert threshold → total cost' : 'umbral de alerta → costo total') + '</text>';
+    }
+    ratio.addEventListener('input', pintarSimulador);
+
+    function render() { pintarMatriz(); pintarSpark(); pintarSimulador(); mostrarSalida(hallazgos[actual]); }
+    if (idioma === 'en') aplicarIdioma('en'); else render();
+  })();
+  </script>
 </body>
 </html>
