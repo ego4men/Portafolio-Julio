@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Julio García Jara · Portafolio</title>
+  <meta name="description" content="Portafolio de análisis de datos, BI y transformación digital de Julio García Jara: SQL, Power BI, Python y machine learning aplicados a créditos, cobranzas y seguros.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fcfcfb;
+      --surface: #ffffff;
+      --surface-2: #f3f2ef;
+      --border: #e4e3df;
+      --text: #0b0b0b;
+      --text-2: #52514e;
+      --accent: #2a78d6;
+      --accent-soft: #e8f1fc;
+      --ok: #1b7f4e;
+      --wip: #8a5a00;
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #121211; --surface: #1a1a19; --surface-2: #232321; --border: #33332f;
+        --text: #f5f5f3; --text-2: #c3c2b7; --accent: #5a9cec; --accent-soft: #1d2a3b;
+        --ok: #4fc58a; --wip: #e0b25a;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #121211; --surface: #1a1a19; --surface-2: #232321; --border: #33332f;
+      --text: #f5f5f3; --text-2: #c3c2b7; --accent: #5a9cec; --accent-soft: #1d2a3b;
+      --ok: #4fc58a; --wip: #e0b25a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif; line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+    nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent);
+          backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 12px; }
+    nav .marca { font-weight: 700; color: var(--text); }
+    nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; font-size: .95rem; }
+    nav ul a { color: var(--text-2); }
+
+    header.hero { padding: 72px 0 48px; }
+    .etiqueta { display: inline-block; font-size: .8rem; font-weight: 600; color: var(--accent);
+                background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+    h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 16px 0 12px; letter-spacing: -0.02em; }
+    .hero p.lead { font-size: 1.15rem; color: var(--text-2); max-width: 720px; margin: 0 0 24px; }
+    .botones { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn { display: inline-block; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: .95rem; }
+    .btn.primario { background: var(--accent); color: #fff; }
+    .btn.secundario { border: 1px solid var(--border); color: var(--text); background: var(--surface); }
+    .btn:hover { text-decoration: none; opacity: .9; }
+
+    section { padding: 48px 0; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.6rem; margin: 0 0 8px; letter-spacing: -0.01em; }
+    .sub { color: var(--text-2); margin: 0 0 28px; }
+
+    .proyecto { display: grid; grid-template-columns: 1.05fr 1fr; gap: 28px; align-items: start;
+                background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+                padding: 24px; margin-bottom: 24px; }
+    .proyecto img { width: 100%; border-radius: 10px; border: 1px solid var(--border); background: #fff; }
+    .proyecto h3 { margin: 6px 0 8px; font-size: 1.3rem; }
+    .proyecto p { margin: 0 0 12px; color: var(--text-2); }
+    .metricas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+    .metrica { background: var(--surface-2); border-radius: 10px; padding: 10px 12px; }
+    .metrica b { display: block; font-size: 1.25rem; color: var(--text); }
+    .metrica span { font-size: .8rem; color: var(--text-2); line-height: 1.3; display: block; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 16px; padding: 0; list-style: none; }
+    .chips li { font-size: .78rem; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--text-2); }
+    .estado { font-size: .78rem; font-weight: 600; }
+    .estado.ok { color: var(--ok); }
+    .estado.wip { color: var(--wip); }
+    .enlaces { display: flex; gap: 16px; flex-wrap: wrap; font-weight: 600; font-size: .95rem; }
+
+    .proximos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .tarjeta { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+    .tarjeta h4 { margin: 4px 0 6px; font-size: 1.02rem; }
+    .tarjeta p { margin: 0; color: var(--text-2); font-size: .92rem; }
+
+    .habilidades { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+    .habilidades h4 { margin: 0 0 8px; font-size: 1rem; }
+    .habilidades ul { margin: 0; padding-left: 18px; color: var(--text-2); font-size: .95rem; }
+
+    footer { border-top: 1px solid var(--border); padding: 28px 0 40px; color: var(--text-2); font-size: .9rem; }
+
+    @media (max-width: 760px) {
+      nav ul { display: none; }
+      .proyecto { grid-template-columns: 1fr; padding: 18px; }
+      .metricas { grid-template-columns: repeat(2, 1fr); }
+      header.hero { padding: 48px 0 32px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="marca" href="#">Julio García Jara</a>
+      <ul>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <span class="etiqueta">Disponible para prácticas · Lima, Perú</span>
+      <h1>Análisis de datos y BI para decisiones de riesgo, cobranza y negocio</h1>
+      <p class="lead">Soy estudiante de último ciclo de Ingeniería de Sistemas de Información en la UPC (egreso: diciembre de 2026).
+        Convierto datos en indicadores y modelos que ayudan a decidir: SQL avanzado, Power BI, Python y machine learning
+        aplicados a créditos, cobranzas, seguros y fraude.</p>
+      <div class="botones">
+        <a class="btn primario" href="#proyectos">Ver proyectos</a>
+        <a class="btn secundario" href="https://github.com/ego4men">GitHub</a>
+        <!-- Agregar cuando esté disponible:
+        <a class="btn secundario" href="https://www.linkedin.com/in/USUARIO">LinkedIn</a>
+        <a class="btn secundario" href="assets/CV_Julio_Garcia_Jara.pdf">Descargar CV</a> -->
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="proyectos">
+      <div class="wrap">
+        <h2>Proyectos</h2>
+        <p class="sub">Problemas de negocio reales resueltos de principio a fin. Todos usan datos públicos o sintéticos.</p>
+
+        <article class="proyecto">
+          <div>
+            <span class="estado ok">● Completo · Créditos y cobranzas</span>
+            <h3>Análisis de cartera y morosidad</h3>
+            <p>Análisis de una cartera de 5 562 créditos (consumo, microempresa y vehicular) en 10 agencias: ratio de mora,
+              migración entre tramos de atraso (<i>roll rates</i>), cosechas y una lista diaria de cobranza priorizada.</p>
+            <div class="metricas">
+              <div class="metrica"><b>4,91 %</b><span>mora &gt; 30 días al corte</span></div>
+              <div class="metrica"><b>73,5 %</b><span>de 1–30 días se regulariza</span></div>
+              <div class="metrica"><b>47,6 %</b><span>de 61–90 días cae a 90+</span></div>
+            </div>
+            <ul class="chips">
+              <li>PostgreSQL</li><li>CTE</li><li>Funciones de ventana</li><li>Vistas materializadas</li>
+              <li>Python</li><li>Power BI · DAX</li>
+            </ul>
+            <div class="enlaces">
+              <a href="https://github.com/ego4men/analisis-cartera-morosidad">Repositorio y hallazgos →</a>
+            </div>
+          </div>
+          <img src="assets/img/cartera_roll_rates.png" alt="Matriz de roll rates mensuales entre tramos de mora" loading="lazy">
+        </article>
+
+        <article class="proyecto">
+          <div>
+            <span class="estado ok">● Completo · Seguros y prevención de fraude</span>
+            <h3>Detección de fraude en seguros vehiculares</h3>
+            <p>Modelo XGBoost calibrado que prioriza qué reclamos investigar. Usa 15 419 reclamos (6 % de fraude),
+              una validación temporal, un umbral elegido por costo y una app en Streamlit con simulador de costos.</p>
+            <div class="metricas">
+              <div class="metrica"><b>47 %</b><span>del fraude detectado revisando el 20 %</span></div>
+              <div class="metrica"><b>3,2×</b><span>PR-AUC frente al azar</span></div>
+              <div class="metrica"><b>−48 %</b><span>costo frente a no usar modelo</span></div>
+            </div>
+            <ul class="chips">
+              <li>Python</li><li>pandas</li><li>Chi-cuadrado</li><li>XGBoost</li><li>Calibración</li><li>Streamlit</li>
+            </ul>
+            <div class="enlaces">
+              <a href="https://github.com/ego4men/deteccion-fraude-seguros">Repositorio y metodología →</a>
+            </div>
+          </div>
+          <img src="assets/img/fraude_captura.png" alt="Curva de captura del modelo de fraude frente a la revisión al azar" loading="lazy">
+        </article>
+
+        <h3 style="margin-top:36px">En desarrollo</h3>
+        <div class="proximos">
+          <div class="tarjeta"><span class="estado wip">● Próximamente</span><h4>App de Power Platform</h4>
+            <p>Registro y aprobación de solicitudes con Power Apps, flujo en Power Automate y reporte en Power BI.</p></div>
+          <div class="tarjeta"><span class="estado wip">● Próximamente</span><h4>Caso de transformación digital</h4>
+            <p>Levantamiento de requisitos, historias de usuario, backlog en Scrum y procesos BPMN actual y propuesto.</p></div>
+          <div class="tarjeta"><span class="estado wip">● Próximamente</span><h4>Pipeline ETL automatizado</h4>
+            <p>API pública → Python → BigQuery → reporte en Looker Studio.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="habilidades">
+      <div class="wrap">
+        <h2>Habilidades</h2>
+        <p class="sub">Herramientas que uso en los proyectos.</p>
+        <div class="habilidades">
+          <div><h4>Datos y BI</h4><ul><li>SQL / PostgreSQL (CTE, funciones de ventana)</li><li>Power BI (DAX, Power Query)</li><li>Excel avanzado (certificado)</li></ul></div>
+          <div><h4>Programación y ML</h4><ul><li>Python: pandas, scikit-learn, XGBoost</li><li>Streamlit</li><li>Java, Angular, APIs REST, Git</li></ul></div>
+          <div><h4>Negocio y gestión</h4><ul><li>Finanzas, contabilidad e ingeniería económica</li><li>Requisitos e historias de usuario</li><li>Scrum (SFC), PMBOK</li></ul></div>
+          <div><h4>Plataformas</h4><ul><li>Salesforce CRM</li><li>Oracle APEX</li><li>Power Apps (en curso)</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre-mi">
+      <div class="wrap">
+        <h2>Sobre mí</h2>
+        <p class="sub" style="max-width:760px">Me interesa trabajar donde los datos cambian decisiones: banca, créditos y cobranzas, seguros y prevención de fraude,
+          consumo masivo y farmacéutica. Me formé en Ingeniería de Sistemas de Información en la UPC, con base en finanzas y gestión de proyectos,
+          y tengo inglés de nivel C1. Este portafolio crece cada semana con nuevos proyectos.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Julio García Jara · <a href="https://github.com/ego4men">github.com/ego4men</a> · Datos de los proyectos públicos o sintéticos.</div>
+  </footer>
+</body>
+</html>
