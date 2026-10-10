@@ -3,7 +3,7 @@
 Estudiante de último ciclo de **Ingeniería de Sistemas de Información** en la UPC (Lima, Perú · egreso: dic 2026).
 Busco prácticas en **análisis de datos, BI y transformación digital**, especialmente en banca, créditos y cobranzas, seguros y prevención de fraude.
 
-🌐 **Portafolio:** [ego4men.github.io/Portafolio-Julio](https://ego4men.github.io/Portafolio-Julio/)
+🌐 **Portafolio:** [ego4men.github.io/Portafolio-Julio](https://ego4men.github.io/Portafolio-Julio/) · 💼 [LinkedIn](https://www.linkedin.com/in/julio-garcia-jara-39a68327b/)
 
 ### 📌 Proyectos destacados
 
