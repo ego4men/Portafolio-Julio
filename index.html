@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Julio García Jara · Análisis de datos</title>
   <meta name="description" content="Portafolio de Julio García Jara: análisis de datos, BI, machine learning e IA generativa aplicados a créditos, cobranzas, seguros y fraude.">
+  <link rel="canonical" href="https://ego4men.github.io/Portafolio-Julio/">
+  <meta name="theme-color" content="#0f6b57">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_PE">
+  <meta property="og:title" content="Julio García Jara · Análisis de datos">
+  <meta property="og:description" content="Proyectos de SQL, Power BI, Python y machine learning aplicados a créditos, cobranzas y fraude en seguros.">
+  <meta property="og:url" content="https://ego4men.github.io/Portafolio-Julio/">
+  <meta property="og:image" content="https://ego4men.github.io/Portafolio-Julio/assets/img/cartera_evolucion.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23121615'/%3E%3Ctext x='16' y='21.5' font-family='Arial' font-weight='700' font-size='14' fill='%23f9fafa' text-anchor='middle'%3EJG%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Julio García Jara","jobTitle":"Practicante de análisis de datos y BI",
+   "alumniOf":"Universidad Peruana de Ciencias Aplicadas","address":{"@type":"PostalAddress","addressLocality":"Lima","addressCountry":"PE"},
+   "url":"https://ego4men.github.io/Portafolio-Julio/","sameAs":["https://www.linkedin.com/in/julio-garcia-jara-39a68327b/","https://github.com/ego4men"]}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,7 +31,7 @@
       --surface: #ffffff;
       --ink: #121615;
       --ink-2: #5b6461;
-      --ink-3: #8a9390;
+      --ink-3: #687270;
       --line: #e3e7e5;
       --accent: #0f6b57;
       --plate: #ffffff;
@@ -27,12 +42,12 @@
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --bg: #0f1211; --surface: #151a18; --ink: #eceeed; --ink-2: #a3aca9; --ink-3: #6f7875;
+        --bg: #0f1211; --surface: #151a18; --ink: #eceeed; --ink-2: #a3aca9; --ink-3: #8a9491;
         --line: #252c29; --accent: #5cc7a6; --plate: #f2f4f3; color-scheme: dark;
       }
     }
     :root[data-theme="dark"] {
-      --bg: #0f1211; --surface: #151a18; --ink: #eceeed; --ink-2: #a3aca9; --ink-3: #6f7875;
+      --bg: #0f1211; --surface: #151a18; --ink: #eceeed; --ink-2: #a3aca9; --ink-3: #8a9491;
       --line: #252c29; --accent: #5cc7a6; --plate: #f2f4f3; color-scheme: dark;
     }
 
@@ -55,7 +70,7 @@
     nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--bg) 90%, transparent);
           backdrop-filter: blur(8px); }
     nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 64px; gap: 16px; }
-    nav .nombre { font-weight: 600; text-decoration: none; }
+    nav .nombre { font-weight: 600; text-decoration: none; white-space: nowrap; }
     nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: .95rem; }
     nav ul a { text-decoration: none; color: var(--ink-2); }
 
@@ -108,6 +123,16 @@
     .subtitulo { font-size: 1.1rem; margin-top: 64px; }
     .subtitulo + .siguientes { margin-top: 16px; }
 
+    .caso { margin: 22px 0 0; display: grid; gap: 10px; }
+    .caso div { display: grid; grid-template-columns: 8.5em 1fr; gap: 16px; padding: 0; border: 0; }
+    .caso dt { font-family: var(--f-mono); font-size: .78rem; color: var(--ink-3); padding-top: 4px; }
+    .caso dd { margin: 0; color: var(--ink); font-size: .98rem; }
+    .habilidades small { display: inline-block; margin-left: 4px; font-family: var(--f-mono); font-size: .72rem; color: var(--accent); }
+    .cta { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+    .cta p { flex-basis: 100%; color: var(--ink); font-size: 1.15rem; font-weight: 500; }
+    .boton { display: inline-block; padding: 12px 20px; border-radius: 8px; background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 500; }
+    .boton:hover { color: var(--bg); opacity: .88; }
+
     /* certificaciones */
     .certificados { display: grid; grid-template-columns: 1fr 1fr; gap: 48px 56px; }
     .certificados .grupo { min-width: 0; }
@@ -145,14 +170,15 @@
     .ficha { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
     .ficha > * { min-width: 0; }
     .ficha .texto { display: grid; gap: 18px; color: var(--ink-2); max-width: 36em; }
-    dl { margin: 32px 0 0; display: grid; }
-    dl div { display: grid; grid-template-columns: 8em 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
+    dl.perfil { margin: 32px 0 0; display: grid; }
+    dl.perfil div { display: grid; grid-template-columns: 8em 1fr; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
     dt { font-family: var(--f-mono); font-size: .8rem; color: var(--ink-3); padding-top: 3px; }
     dd { margin: 0; color: var(--ink); }
 
     footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var(--ink-3); font-size: .88rem; }
     footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 
+    @media (max-width: 1000px) { nav ul li:not(.m) { display: none; } }
     @media (max-width: 860px) {
       .titulo, .ficha, .experiencia article { grid-template-columns: 1fr; gap: 10px; }
       .proyecto { grid-template-columns: 1fr; gap: 28px; }
@@ -168,14 +194,15 @@
       .resultados p { max-width: none; }
     }
     @media (max-width: 600px) {
-      nav ul { display: none; }
+      nav ul { gap: 16px; font-size: .9rem; }
       .hero { padding-block: 56px 56px; }
       section { padding-block: 64px; }
       .datos { grid-template-columns: 1fr 1fr; gap: 20px 24px; }
       .habilidades { grid-template-columns: 1fr; gap: 28px; }
       .certificados { grid-template-columns: 1fr; }
-      dl div { grid-template-columns: 1fr; gap: 2px; }
+      dl.perfil div, .caso div { grid-template-columns: 1fr; gap: 2px; }
     }
+    @media (max-width: 440px) { nav ul li.x { display: none; } }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } a { transition: none; } }
   </style>
 </head>
@@ -184,21 +211,22 @@
     <div class="wrap">
       <a class="nombre" href="#inicio">Julio García Jara</a>
       <ul>
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#experiencia">Experiencia</a></li>
+        <li class="m"><a href="#proyectos">Proyectos</a></li>
+        <li class="m x"><a href="#experiencia">Experiencia</a></li>
         <li><a href="#ia">IA aplicada</a></li>
         <li><a href="#habilidades">Habilidades</a></li>
-        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#certificaciones">Certificaciones</a></li>
+        <li class="m"><a href="#contacto">Contacto</a></li>
       </ul>
     </div>
   </nav>
 
   <header class="hero" id="inicio">
     <div class="wrap">
-      <span class="label estado">Disponibilidad inmediata para prácticas · Lima, Perú</span>
+      <span class="label estado">Practicante de análisis de datos y BI · Disponibilidad inmediata · Lima, Perú</span>
       <h1>Análisis de datos para riesgo, cobranzas y fraude. <span>De la consulta SQL a la decisión.</span></h1>
-      <p class="lead">Soy estudiante de último ciclo de Ingeniería de Sistemas de Información en la UPC (egreso en diciembre de 2026).
-        Trabajo con SQL, Power BI, Python, machine learning e IA generativa.</p>
+      <p class="lead">Soy estudiante de último ciclo de Ingeniería de Sistemas de Información en la UPC (egreso en diciembre de 2026),
+        con experiencia atendiendo en inglés a clientes de EE. UU. Trabajo con SQL, Power BI, Python, machine learning e IA generativa.</p>
       <div class="acciones">
         <a href="#proyectos">Ver proyectos</a>
         <a href="https://www.linkedin.com/in/julio-garcia-jara-39a68327b/">LinkedIn</a>
@@ -206,9 +234,9 @@
       </div>
 
       <div class="resultados" aria-label="Resultados destacados">
-        <div><b>47,6 %</b><p>de los créditos con 61–90 días de atraso cae a más de 90 días al mes siguiente.</p><span class="label">P1 · Cartera y morosidad</span></div>
-        <div><b>47 %</b><p>del fraude se detecta revisando solo el 20 % de los reclamos más riesgosos.</p><span class="label">P2 · Fraude en seguros</span></div>
-        <div><b>−48 %</b><p>de costo de investigación y fraude frente a no usar el modelo.</p><span class="label">P2 · Fraude en seguros</span></div>
+        <div><b>47,6 %</b><p>de los créditos con 61–90 días de atraso cae a más de 90 días al mes siguiente.</p><span class="label">P1 · Cartera y morosidad · datos sintéticos</span></div>
+        <div><b>47 %</b><p>del fraude se detecta revisando solo el 20 % de los reclamos más riesgosos.</p><span class="label">P2 · Fraude en seguros · dataset público</span></div>
+        <div><b>−48 %</b><p>de costo de investigación y fraude frente a no usar el modelo.</p><span class="label">P2 · Fraude en seguros · dataset público</span></div>
       </div>
     </div>
   </header>
@@ -227,12 +255,16 @@
             <h3><a href="https://github.com/ego4men/analisis-cartera-morosidad">Análisis de cartera y morosidad</a></h3>
             <p class="desc">Cartera de 5 562 créditos de consumo, microempresa y vehicular en 10 agencias, modelada en PostgreSQL.
               Mide el ratio de mora, la migración entre tramos de atraso y la calidad por cosecha, y genera una lista diaria de cobranza priorizada.</p>
+            <dl class="caso">
+              <div><dt>Pregunta</dt><dd>¿Dónde se concentra el riesgo y qué créditos debe gestionar hoy cobranzas?</dd></div>
+              <div><dt>Recomendación</dt><dd>Concentrar la gestión en 1–60 días, donde todavía se recupera, y revisar la originación en microempresa.</dd></div>
+            </dl>
             <div class="datos">
               <div><b>4,91 %</b><span>mora mayor a 30 días al corte</span></div>
               <div><b>73,5 %</b><span>de 1–30 días se regulariza en un mes</span></div>
               <div><b>9,07 %</b><span>mora en microempresa, más del doble que consumo</span></div>
             </div>
-            <p class="stack mono">PostgreSQL · CTE · funciones de ventana · vistas materializadas · Python · Power BI</p>
+            <p class="stack mono">PostgreSQL · CTE · funciones de ventana · vistas materializadas · Python · Power BI (dashboard en construcción)</p>
             <a class="ver" href="https://github.com/ego4men/analisis-cartera-morosidad">Ver repositorio →</a>
           </div>
           <figure>
@@ -247,10 +279,14 @@
             <h3><a href="https://github.com/ego4men/deteccion-fraude-seguros">Detección de fraude en seguros vehiculares</a></h3>
             <p class="desc">Modelo XGBoost calibrado que prioriza qué reclamos investigar entre 15 419 casos con 6 % de fraude.
               Usa validación temporal y un umbral elegido por costo, e incluye una app en Streamlit con simulador de costos.</p>
+            <dl class="caso">
+              <div><dt>Pregunta</dt><dd>¿Qué reclamos conviene investigar para detectar más fraude con menos esfuerzo?</dd></div>
+              <div><dt>Recomendación</dt><dd>Investigar por puntaje de riesgo con un umbral definido por costo, y reentrenar el modelo cada año por la deriva de los datos.</dd></div>
+            </dl>
             <div class="datos">
-              <div><b>0,790</b><span>ROC-AUC en reclamos de 1996</span></div>
-              <div><b>3,2×</b><span>PR-AUC frente al azar</span></div>
               <div><b>92,5 %</b><span>del fraude detectado con el umbral de costo mínimo</span></div>
+              <div><b>−48 %</b><span>de costo frente a no usar el modelo</span></div>
+              <div><b>3,2×</b><span>PR-AUC frente al azar (ROC-AUC 0,790)</span></div>
             </div>
             <p class="stack mono">Python · pandas · chi-cuadrado · XGBoost · calibración · Streamlit</p>
             <a class="ver" href="https://github.com/ego4men/deteccion-fraude-seguros">Ver repositorio →</a>
@@ -261,6 +297,7 @@
           </figure>
         </article>
 
+        <h3 class="subtitulo">En desarrollo</h3>
         <div class="siguientes" aria-label="Proyectos en desarrollo">
           <div><span class="label">P3</span><strong>App de Power Platform</strong><span>Solicitudes con Power Apps, aprobación en Power Automate y reporte en Power BI.</span></div>
           <div><span class="label">P4</span><strong>Transformación digital</strong><span>Requisitos, historias de usuario, Scrum y procesos BPMN actual y propuesto.</span></div>
@@ -336,13 +373,13 @@
       <div class="wrap">
         <div class="titulo">
           <span class="label">Habilidades</span>
-          <p>Herramientas que uso en los proyectos de este portafolio.</p>
+          <p>Cada herramienta indica dónde la apliqué: P1 y P2 son los proyectos de este portafolio, UPC los proyectos académicos y TP mi trabajo en Teleperformance.</p>
         </div>
         <div class="habilidades">
-          <div><h3>Datos y BI</h3><ul><li>SQL avanzado y PostgreSQL</li><li>Power BI: DAX, Power Query</li><li>Excel avanzado y macros (certificado)</li><li>Python: pandas</li></ul></div>
-          <div><h3>Programación y nube</h3><ul><li>scikit-learn, XGBoost, Streamlit</li><li>Java, Angular, APIs REST, Git</li><li>Microsoft Azure, Linux Ubuntu</li></ul></div>
-          <div><h3>IA generativa</h3><ul><li>Prompt engineering</li><li>Automatización con agentes</li><li>ChatGPT, Gemini y Claude</li><li>Validación de resultados</li></ul></div>
-          <div><h3>Negocio y gestión</h3><ul><li>Finanzas e ingeniería económica</li><li>Requisitos, Scrum (SFC), PMBOK</li><li>Bizagi, Lean, ISO 27001</li><li>Salesforce, Oracle APEX, Power Apps, Power Automate</li></ul></div>
+          <div><h3>Datos y BI</h3><ul><li>SQL avanzado y PostgreSQL <small>P1 · UPC</small></li><li>Power BI: DAX, Power Query <small>UPC</small></li><li>Excel avanzado y macros <small>certificado</small></li><li>Python: pandas <small>P1 · P2 · UPC</small></li></ul></div>
+          <div><h3>Programación y nube</h3><ul><li>scikit-learn, XGBoost <small>P2 · UPC</small></li><li>Streamlit <small>P2 · UPC</small></li><li>Java, Angular, APIs REST <small>UPC</small></li><li>Microsoft Azure, Linux <small>UPC</small></li></ul></div>
+          <div><h3>IA generativa</h3><ul><li>Prompt engineering <small>P1 · P2</small></li><li>Automatización con agentes <small>P1 · P2</small></li><li>ChatGPT, Gemini y Claude</li><li>Validación de resultados <small>P1 · P2</small></li></ul></div>
+          <div><h3>Negocio y gestión</h3><ul><li>Finanzas y riesgo crediticio <small>P1</small></li><li>Requisitos, Scrum, PMBOK <small>SFC</small></li><li>Salesforce CRM, Oracle APEX <small>TP</small></li><li>Power Apps, Power Automate <small>en curso</small></li></ul></div>
         </div>
       </div>
     </section>
@@ -390,22 +427,26 @@
       </div>
     </section>
 
-    <section id="sobre-mi">
+    <section id="contacto">
       <div class="wrap ficha">
         <span class="label">Sobre mí</span>
         <div>
           <div class="texto">
             <p>Me interesa trabajar donde los datos cambian decisiones: banca, créditos y cobranzas, seguros y prevención de fraude,
               consumo masivo y farmacéutica.</p>
-            <p>Combino la base técnica de sistemas con formación en contabilidad, finanzas y gestión de proyectos, y experiencia atendiendo clientes de EE. UU. con métricas de calidad. Este portafolio crece cada semana con proyectos nuevos.</p>
+            <p>Combino la base técnica de sistemas con formación en contabilidad, finanzas y gestión de proyectos, y experiencia atendiendo clientes de EE. UU. con métricas de calidad. Agrego proyectos nuevos de forma continua.</p>
           </div>
-          <dl>
+          <dl class="perfil">
             <div><dt>Formación</dt><dd>Ingeniería de Sistemas de Información, UPC · 10.º ciclo</dd></div>
             <div><dt>Egreso</dt><dd>Diciembre de 2026</dd></div>
             <div><dt>Idiomas</dt><dd>Español nativo · Inglés C1 (TOEFL ITP 580; C1 en la evaluación de Teleperformance)</dd></div>
             <div><dt>Busco</dt><dd>Prácticas preprofesionales en análisis de datos, BI y transformación digital · disponibilidad inmediata</dd></div>
-            <div><dt>Contacto</dt><dd><a href="https://www.linkedin.com/in/julio-garcia-jara-39a68327b/">LinkedIn</a> · <a href="https://github.com/ego4men">github.com/ego4men</a></dd></div>
           </dl>
+          <div class="cta">
+            <p>¿Buscas un practicante de datos o BI? Escríbeme por LinkedIn.</p>
+            <a class="boton" href="https://www.linkedin.com/in/julio-garcia-jara-39a68327b/">Contactar por LinkedIn →</a>
+            <a href="https://github.com/ego4men">Ver GitHub</a>
+          </div>
         </div>
       </div>
     </section>
@@ -414,7 +455,7 @@
   <footer>
     <div class="wrap">
       <span>© 2026 Julio García Jara</span>
-      <span>Datos públicos o sintéticos en todos los proyectos.</span>
+      <span>Datos públicos o sintéticos en todos los proyectos · Actualizado en octubre de 2026</span>
     </div>
   </footer>
 </body>
