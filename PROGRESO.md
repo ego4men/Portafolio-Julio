@@ -22,15 +22,15 @@
 | 10/10 | P2 · Fraude en seguros: EDA, estadística, XGBoost calibrado, app Streamlit y README | ✅ |
 | 10/10 | Sitio del portafolio y README del perfil | ✅ (local) |
 | 10/10 | Publicado en GitHub: 2 repos de proyecto, portafolio en Pages y perfil | ✅ |
-| ≤ 15/10 | Julio: validar el dashboard PBIP en Power BI Desktop y desplegar la app en Streamlit Community Cloud | 🟡 |
+| 10/10 | Dashboard PBIP validado en Power BI Desktop (tema propio, 3 páginas) y app desplegada: https://fraude-seguros-julio.streamlit.app/ | ✅ |
 | Después del 15/10 | Repasos pendientes (abajo) y luego P3 Power Platform → P4 Transformación digital → P5 ETL → P6 Modelo financiero | ⬜ |
 
 ## Proyectos
 
 | # | Proyecto | Carpeta local | Repo | Estado |
 |---|---|---|---|---|
-| 1 | Análisis de cartera y morosidad | `D:/Proyectos/analisis-cartera-morosidad` | [github.com/ego4men/analisis-cartera-morosidad](https://github.com/ego4men/analisis-cartera-morosidad) | ✅ Publicado · PBIP por validar |
-| 2 | Detección de fraude en seguros | `D:/Proyectos/deteccion-fraude-seguros` | [github.com/ego4men/deteccion-fraude-seguros](https://github.com/ego4men/deteccion-fraude-seguros) | ✅ Publicado · falta desplegar la app |
+| 1 | Análisis de cartera y morosidad | `D:/Proyectos/analisis-cartera-morosidad` | [github.com/ego4men/analisis-cartera-morosidad](https://github.com/ego4men/analisis-cartera-morosidad) | ✅ Publicado · dashboard validado |
+| 2 | Detección de fraude en seguros | `D:/Proyectos/deteccion-fraude-seguros` | [github.com/ego4men/deteccion-fraude-seguros](https://github.com/ego4men/deteccion-fraude-seguros) | ✅ Publicado · demo en Streamlit |
 | 3 | App de Power Platform | — | — | ⬜ |
 | 4 | Caso de transformación digital | — | — | ⬜ |
 | 5 | Pipeline ETL automatizado | — | — | ⬜ |
@@ -69,9 +69,9 @@ Cada repaso usa el código ya construido como material de estudio.
 - [x] Configurar el nombre y el correo en Git (correo noreply de GitHub)
 - [x] Instalar pandas, faker, psycopg2, scikit-learn, xgboost y streamlit
 - [x] Publicar en GitHub (repos, Pages y perfil)
-- [ ] Agregar los enlaces de LinkedIn y del CV en `index.html` (están comentados en el código)
-- [ ] Construir el `.pbix` y agregar sus capturas al README de P1
-- [ ] Desplegar la app de P2 en Streamlit Community Cloud y poner el enlace en su README y en el sitio
+- [x] LinkedIn y CV descargable en el sitio
+- [x] Dashboard de Power BI (PBIP) con capturas en el README y en el portafolio
+- [x] App de P2 desplegada en Streamlit Community Cloud y enlazada
 - [ ] Agregar `psql` al PATH (opcional; por ahora se usa la ruta completa)
 
 ## Líneas para el CV
