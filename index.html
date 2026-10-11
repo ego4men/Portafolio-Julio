@@ -13,7 +13,7 @@
   <meta property="og:title" content="Julio García Jara · Análisis de datos">
   <meta property="og:description" content="Proyectos de SQL, Power BI, Python y machine learning aplicados a créditos, cobranzas y fraude en seguros.">
   <meta property="og:url" content="https://ego4men.github.io/Portafolio-Julio/">
-  <meta property="og:image" content="https://ego4men.github.io/Portafolio-Julio/assets/img/cartera_evolucion.png">
+  <meta property="og:image" content="https://ego4men.github.io/Portafolio-Julio/assets/img/pbi_resumen.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23121615'/%3E%3Ctext x='16' y='21.5' font-family='Arial' font-weight='700' font-size='14' fill='%23f9fafa' text-anchor='middle'%3EJG%3C/text%3E%3C/svg%3E">
   <script type="application/ld+json">
@@ -203,6 +203,22 @@
     .lista strong { color: var(--ink); font-weight: 500; }
     .subtitulo { font-size: 1.05rem; margin: 56px 0 14px; }
 
+    /* visor del dashboard de Power BI */
+    .galeria { padding-block: 8px 56px; }
+    .gal-cab { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 32px; margin-bottom: 20px; }
+    .gal-cab > div:first-child { max-width: 40em; min-width: 0; }
+    .gal-cab h3 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); margin: 10px 0 8px; }
+    .gal-cab p { color: var(--ink-2); }
+    .gal-tabs { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+    .gal-tabs button { border: 0; background: none; cursor: pointer; padding: 8px 14px; border-radius: 7px; font-size: .9rem; color: var(--ink-2); }
+    .gal-tabs button:hover { color: var(--ink); }
+    .gal-tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+    .gal-marco { display: block; border-radius: 14px; overflow: hidden; background: #070f16; border: 1px solid var(--line);
+                 box-shadow: 0 30px 60px -30px rgb(0 0 0 / .5); }
+    .gal-marco img { width: 100%; transition: opacity .25s; }
+    .gal-marco img.cambiando { opacity: .25; }
+    .gal-nota { margin-top: 12px; }
+
     /* experiencia */
     .experiencia article { display: grid; grid-template-columns: 1fr 2.2fr; gap: 24px; padding-block: 28px; border-top: 1px solid var(--line); }
     .experiencia article > * { min-width: 0; }
@@ -374,6 +390,26 @@
             </div>
           </div>
         </article>
+
+        <!-- P1 · dashboard de Power BI -->
+        <div class="galeria revelar" id="dashboard">
+          <div class="gal-cab">
+            <div>
+              <span class="label">P1 · Power BI</span>
+              <h3 data-i18n="gal_titulo">Dashboard de cartera y morosidad</h3>
+              <p data-i18n="gal_desc">Tres páginas con tema propio, KPIs con variación mensual y colores semánticos de riesgo. El reporte se genera como proyecto PBIP desde Python y se actualiza desde GitHub.</p>
+            </div>
+            <div class="gal-tabs" role="tablist" aria-label="Páginas del dashboard">
+              <button type="button" role="tab" aria-selected="true" data-img="assets/img/pbi_resumen.jpg" data-i18n="gal_t1">Resumen</button>
+              <button type="button" role="tab" aria-selected="false" data-img="assets/img/pbi_agencias.jpg" data-i18n="gal_t2">Agencias</button>
+              <button type="button" role="tab" aria-selected="false" data-img="assets/img/pbi_cobranza.jpg" data-i18n="gal_t3">Cobranza</button>
+            </div>
+          </div>
+          <a class="gal-marco" id="gal-enlace" href="assets/img/pbi_resumen.jpg" aria-label="Ver la página del dashboard en tamaño completo">
+            <img id="gal-img" src="assets/img/pbi_resumen.jpg" alt="Página de resumen ejecutivo del dashboard de Power BI: KPIs de saldo, mora y castigos, evolución mensual de la mora y del saldo" width="1280" height="745" loading="lazy">
+          </a>
+          <p class="label gal-nota" id="gal-nota" data-i18n="gal_n1">Resumen ejecutivo: KPIs, evolución de la mora y del saldo, y mora por producto.</p>
+        </div>
 
         <!-- P2 -->
         <article class="proyecto revelar" id="p2">
@@ -675,8 +711,29 @@
       d_idi: 'Languages', d_idi_v: 'Spanish (native) · English C1 (TOEFL ITP 580; C1 in Teleperformance’s assessment)',
       d_bus: 'Looking for', d_bus_v: 'Internships in data analysis, BI and digital transformation · available now',
       cta: 'Looking for a data or BI intern? Let’s talk.', cta_li: 'Message me on LinkedIn',
-      pie: 'Public or synthetic data in every project · Updated October 2026'
+      pie: 'Public or synthetic data in every project · Updated October 2026',
+      gal_titulo: 'Loan portfolio and delinquency dashboard',
+      gal_desc: 'Three pages with a custom theme, month-over-month KPIs and semantic risk colors. The report is generated as a PBIP project from Python and refreshes from GitHub.',
+      gal_t1: 'Summary', gal_t2: 'Branches', gal_t3: 'Collections',
+      gal_n1: 'Executive summary: KPIs, delinquency and balance trends, and delinquency by product.'
     };
+    var NOTAS = {
+      es: ['Resumen ejecutivo: KPIs, evolución de la mora y del saldo, y mora por producto.',
+           'Agencias: ranking de mora, composición del saldo por tramo de atraso y matriz agencia × tramo.',
+           'Gestión de cobranza: lista priorizada de créditos con 1 a 60 días de atraso, con filtros por agencia y producto.'],
+      en: ['Executive summary: KPIs, delinquency and balance trends, and delinquency by product.',
+           'Branches: delinquency ranking, balance mix by past-due bucket and a branch × bucket matrix.',
+           'Collections: prioritized list of loans 1 to 60 days past due, filterable by branch and product.']
+    };
+    var ALTS = {
+      es: ['Página de resumen ejecutivo del dashboard de Power BI: KPIs de saldo, mora y castigos, evolución mensual de la mora y del saldo',
+           'Página de agencias del dashboard: mora por agencia, composición del saldo por tramo y matriz de saldos',
+           'Página de gestión de cobranza del dashboard: lista priorizada de créditos, monto vencido por producto y créditos por agencia'],
+      en: ['Executive summary page of the Power BI dashboard: balance, delinquency and write-off KPIs, monthly delinquency and balance trends',
+           'Branches page: delinquency by branch, balance mix by past-due bucket and balance matrix',
+           'Collections page: prioritized loan list, past-due amount by product and loans by branch']
+    };
+    var galPagina = 0;
     var nodos = document.querySelectorAll('[data-i18n]');
     var ES = {};
     nodos.forEach(function (n) { ES[n.dataset.i18n] = n.innerHTML; });
@@ -880,7 +937,30 @@
     }
     ratio.addEventListener('input', pintarSimulador);
 
-    function render() { pintarMatriz(); pintarSpark(); pintarSimulador(); mostrarSalida(hallazgos[actual]); }
+    /* ------------------------------------------------------------------
+       P1 · Visor del dashboard de Power BI
+       ------------------------------------------------------------------ */
+    var galTabs = document.querySelectorAll('.gal-tabs button'), galImg = document.getElementById('gal-img'),
+        galEnlace = document.getElementById('gal-enlace'), galNota = document.getElementById('gal-nota');
+    function pintarGaleria() {
+      galTabs.forEach(function (b, i) { b.setAttribute('aria-selected', i === galPagina ? 'true' : 'false'); });
+      galNota.textContent = NOTAS[idioma][galPagina];
+      galImg.alt = ALTS[idioma][galPagina];
+    }
+    galTabs.forEach(function (b, i) {
+      b.addEventListener('click', function () {
+        if (i === galPagina) return;
+        galPagina = i;
+        var src = b.dataset.img;
+        galImg.classList.add('cambiando');
+        var pre = new Image();
+        pre.onload = pre.onerror = function () { galImg.src = src; galEnlace.href = src; galImg.classList.remove('cambiando'); };
+        pre.src = src;
+        pintarGaleria();
+      });
+    });
+
+    function render() { pintarMatriz(); pintarSpark(); pintarSimulador(); pintarGaleria(); mostrarSalida(hallazgos[actual]); }
     if (idioma === 'en') aplicarIdioma('en'); else render();
   })();
   </script>
